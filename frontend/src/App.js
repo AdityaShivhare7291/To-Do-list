@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import HomePage from './pages/homepage';
 import GetStarted from './pages/getstated'
 
+
 import './App.css';
 
 const App = () => {
@@ -17,14 +18,13 @@ const App = () => {
           path="/"
           element={isLoggedIn ? <HomePage /> : <Navigate to="/GetStarted" />}
         />
-        <Route
-          path="/login"
-          element={<HomePage />}
-        />
+
         <Route
           path="/GetStarted"
           element={<GetStarted />}
         />
+
+
         {/* <Route path="/about" element={<AboutPage />} />
         <Route path="*" element={<NotFoundPage />} /> */}
       </Routes>
