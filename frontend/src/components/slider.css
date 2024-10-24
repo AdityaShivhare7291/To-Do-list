@@ -1,0 +1,11 @@
+.child-slider-container{
+    width: 80%;
+    align-items: center;
+}
+.slider-container{
+    display: flex;
+    justify-content: center;
+}
+.slick-next:before, .slick-prev:before {
+    color:black;
+}
