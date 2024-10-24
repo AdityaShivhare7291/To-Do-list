@@ -3,14 +3,14 @@ import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-const LoginModal = ({ isOpen, onClose, onSubmit, onSignUp }) => {
+const SignUpModal = ({ isOpen, onClose, onSubmit }) => {
     if (!isOpen) return null; // Don't render the modal if it's not open
 
     return (
         <div style={styles.overlay}>
             <div style={styles.modal}>
                 <div style={styles.header}>
-                    <h2>Login</h2>
+                    <h2>Sign Up</h2>
                     {/* Close icon */}
                     <FontAwesomeIcon
                         icon={faTimes}
@@ -20,6 +20,10 @@ const LoginModal = ({ isOpen, onClose, onSubmit, onSignUp }) => {
                 </div>
                 <form onSubmit={onSubmit}>
                     <div style={styles.inputGroup}>
+                        <label>Username:</label>
+                        <input type="text" required style={styles.input} />
+                    </div>
+                    <div style={styles.inputGroup}>
                         <label>Email:</label>
                         <input type="email" required style={styles.input} />
                     </div>
@@ -28,9 +32,6 @@ const LoginModal = ({ isOpen, onClose, onSubmit, onSignUp }) => {
                         <input type="password" required style={styles.input} />
                     </div>
                     <button type="submit" style={styles.submitButton}>Submit</button>
-                    <button onClick={(e) => {
-                        onSignUp(e);
-                    }} style={styles.submitButton}>Sign Up</button>
                 </form>
             </div>
         </div>
@@ -88,4 +89,4 @@ const styles = {
     },
 };
 
-export default LoginModal;
+export default SignUpModal;
