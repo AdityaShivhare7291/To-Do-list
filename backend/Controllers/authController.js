@@ -1,8 +1,10 @@
 const User = require('../Models/Users.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { v4: uuidv4 } = require('uuid');
+const Tokens = require('../Models/Tokens.js');
 
-class AdminController {
+class AuthController {
   hashPassword = async (password) => {
     const saltRounds = 12; // Adjust based on desired security level
     const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -30,11 +32,11 @@ class AdminController {
           .json({ message: 'User with email already exists' });
       }
 
-      const hashedPassword = this.hashPassword(password);
+      const hashedPassword = await this.hashPassword(password);
 
-      const user = await new Person({
+      const user = await new User({
         email,
-        hashedPassword,
+        password: hashedPassword,
         name,
       }).save();
 
@@ -46,8 +48,21 @@ class AdminController {
       };
 
       const userToken = jwt.sign(payload, secretKey, { expiresIn: '7d' }); // Token expires in 4 hour
+      const userId = uuidv4();
 
-      return res.status(200).json({ userToken });
+      res.cookie('authToken', userToken, {
+        httpOnly: true,
+        sameSite: 'Strict',
+        maxAge: 3600000 * 24 * 7, // 7 days
+      });
+
+      await Tokens.create({
+        userId,
+        token: userToken,
+        expirationTime: new Date(Date.now() + 60 * 60 * 1000 * 24 * 7), // 1 hour expiration
+      });
+
+      return res.status(200).json({ userId });
     } catch (e) {
       console.log(e);
       res.status(500).json({ message: 'INternal Server Error' });
@@ -70,8 +85,10 @@ class AdminController {
         .status(403)
         .json({ message: 'Data is not provided succesfully' });
     }
+    console.log(userData);
 
-    if (this.comparePassword(password, userData.password)) {
+    const valid = await this.comparePassword(password, userData.password);
+    if (!valid) {
       return res.status(403).json({ message: 'Invalid credential' });
     }
 
@@ -85,10 +102,24 @@ class AdminController {
 
     const userToken = jwt.sign(payload, secretKey, { expiresIn: '7d' });
 
+    res.cookie('authToken', userToken, {
+      httpOnly: true,
+      sameSite: 'Strict',
+      maxAge: 3600000 * 24 * 7, // 7 days
+    });
+
+    const userId = uuidv4();
+
+    await Tokens.create({
+      userId,
+      token: userToken,
+      expirationTime: new Date(Date.now() + 60 * 60 * 1000 * 24 * 7), // 1 hour expiration
+    });
+
     return res
       .status(200)
-      .json({ message: 'successfully logged in', Token: userToken });
+      .json({ message: 'successfully logged in', user: userId });
   };
 }
 
-module.exports = new AdminController();
+module.exports = new AuthController();
