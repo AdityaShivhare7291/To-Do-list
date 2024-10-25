@@ -1,10 +1,9 @@
-const User = require("../Models/Users");
-const jwt = require("jsonwebtoken");
-
+const User = require('../Models/Users');
+const jwt = require('jsonwebtoken');
 
 function authenticateToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
   if (token == null) {
     return res.sendStatus(401);
   }
@@ -16,8 +15,7 @@ function authenticateToken(req, res, next) {
       }
       const result = await User.findOne({
         email: user.email,
-      })
-
+      });
 
       if (!result || result.email != user.email) {
         return res.sendStatus(403);
@@ -31,10 +29,9 @@ function authenticateToken(req, res, next) {
       console.log(req.user);
       next();
     });
-
   } catch (e) {
     console.error(e);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: 'Internal server error' });
   }
 }
 
