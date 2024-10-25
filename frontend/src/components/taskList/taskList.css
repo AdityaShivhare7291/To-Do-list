@@ -1,9 +1,8 @@
-.task-container-1{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding-left: 5px;
-    padding-right: 5px;
+.task-container-1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 5px;
+  padding-right: 5px;
 }
-  
