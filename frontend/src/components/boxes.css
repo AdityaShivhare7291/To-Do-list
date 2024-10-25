@@ -1,0 +1,40 @@
+.progress-container {
+    display: flex;                  /* Flexbox layout */
+    flex-direction: row;           /* Arrange items in a row */
+    align-items: center;           /* Align items vertically */
+    justify-content: space-around;  /* Space items evenly */
+    flex-wrap: wrap;               /* Allow wrapping of items */
+    width: 100%;                   /* Full width */
+}
+
+.progress-task-completed-container {
+    display: flex;                  /* Flexbox layout for inner container */
+    flex-direction: row;
+    flex-wrap: wrap;           /* Arrange items in a row */
+    padding: 2%;                 /* Padding inside the container */
+    max-width: 162px;              /* Maximum width for the container */
+    max-height: 96px;              /* Maximum height for the container */
+    margin: 5px;                  /* Margin around each container */
+}
+
+.progress-task-completed-container img {
+    max-width: 28px;               /* Maximum width for the image */
+    max-height: 28px;              /* Maximum height for the image */
+    object-fit: cover;             /* Maintain aspect ratio */
+}
+
+.progress-task-completed-container div {
+    padding: 8px;                  /* Padding for text container */
+}
+
+.progress-task-completed-container h3 {
+    margin: 0;                     /* Remove default margin */
+}
+
+.progress-task-completed-container p {
+    margin: 0;                     /* Remove default margin */
+    font-size: 12px;               /* Adjust font size */
+    text-align: center;            /* Center-align text */
+    line-height: 1.2;              /* Adjust line height for readability */
+    white-space: normal;           /* Allow text wrapping */
+}
