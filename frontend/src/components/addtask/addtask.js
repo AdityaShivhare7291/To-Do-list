@@ -3,6 +3,7 @@ import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { margin } from "@mui/system";
 
 const AddTask = ({ isOpen, onClose }) => {
     const [startTime, setStartTime] = useState(null);
@@ -35,7 +36,8 @@ const AddTask = ({ isOpen, onClose }) => {
 
                     {/* Start Time */}
                     <div style={styles.inputGroup}>
-                        <label>Start Time:</label>
+                        <label>Set Time:</label>
+                        <br />
                         <Flatpickr
                             value={startTime}
                             onChange={(date) => setStartTime(date[0])}
@@ -45,13 +47,8 @@ const AddTask = ({ isOpen, onClose }) => {
                                 dateFormat: "h:i K", // 12-hour format
                                 time_24hr: false,
                             }}
-                            style={styles.input}
+                            style={styles.setTime}
                         />
-                    </div>
-
-                    {/* End Time */}
-                    <div style={styles.inputGroup}>
-                        <label>End Time:</label>
                         <Flatpickr
                             value={endTime}
                             onChange={(date) => setEndTime(date[0])}
@@ -61,9 +58,11 @@ const AddTask = ({ isOpen, onClose }) => {
                                 dateFormat: "h:i K", // 12-hour format
                                 time_24hr: false,
                             }}
-                            style={styles.input}
+                            style={styles.setTime}
                         />
                     </div>
+
+
 
                     {/* Task Date */}
                     <div style={styles.inputGroup}>
@@ -81,6 +80,7 @@ const AddTask = ({ isOpen, onClose }) => {
                     {/* Description Field */}
                     <div style={styles.inputGroup}>
                         <label>Description:</label>
+                        <br />
                         <textarea
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
@@ -132,9 +132,18 @@ const styles = {
     },
     input: {
         width: "100%",
-        padding: "8px",
+        height: "27px",
+        padding: "6px",
         border: "1px solid #ccc",
         borderRadius: "4px",
+    },
+    setTime: {
+        width: "100%",
+        height: "27px",
+        padding: "6px",
+        border: "1px solid #ccc",
+        borderRadius: "4px",
+        margin: "10px"
     },
     submitButton: {
         padding: "10px 20px",
