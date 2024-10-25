@@ -42,10 +42,6 @@ const AddTask = ({ isOpen, onClose }) => {
                             <label style={styles.labelstyling}>Task title:</label>
                             <input type="text" required style={styles.input} />
                         </div>
-                        <div style={styles.inputGroup}>
-                            <label style={styles.labelstyling}>Password:</label>
-                            <input type="password" required style={styles.input} />
-                        </div>
 
                         {/* Start Time */}
                         <div style={styles.inputGroup}>
