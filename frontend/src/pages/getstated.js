@@ -4,21 +4,29 @@ import SignUpModal from '../components/signup'; // Adjust the path accordingly
 import wave1 from '../static/wave1.png';
 import wave2 from '../static/wave2.png';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function GetStarted() {
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [isSignUpOpen, setSignUpOpen] = useState(false);
   const navigate = useNavigate();
 
-  const handleLoginSubmit = (e) => {
-    e.preventDefault();
+  const handleLoginSubmit = async ({ email, password }) => {
     // Handle login logic here
     setLoginOpen(false);
-    navigate('/dashboard'); // Navigate to home after login
+    const response = await axios.post(
+      `${process.env.REACT_APP_SERVER_PORT}/auth/login`,
+      { email, password }
+    );
+    console.log({ response });
+    if (response.data) {
+      navigate('/dashboard');
+      localStorage.setItem('authToken-todo', response.data.user);
+    }
+    // Navigate to home after login
   };
 
   const handleSignUpSubmit = (e) => {
-    e.preventDefault();
     // Handle signup logic here
     setSignUpOpen(false);
     navigate('/dashboard'); // Navigate to home after signup

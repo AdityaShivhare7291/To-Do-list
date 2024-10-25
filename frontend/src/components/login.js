@@ -2,9 +2,40 @@ import React from 'react';
 // Import Font Awesome components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
+import axios from 'axios';
 
 const LoginModal = ({ isOpen, onClose, onSubmit, onSignUp }) => {
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+
   if (!isOpen) return null; // Don't render the modal if it's not open
+
+  function checkCondition(condition) {
+    return new Promise((resolve, reject) => {
+      // Simulate an asynchronous operation
+      setTimeout(() => {
+        if (condition) {
+          resolve('Condition is true!'); // Resolve the promise if condition is true
+        } else {
+          reject(new Error('Condition is false!')); // Reject the promise if condition is false
+        }
+      }, 10000); // Simulate a 1-second delay
+    });
+  }
+
+  const submitFormData = async (e) => {
+    try {
+      // Send the data to the server
+      // console.log({ server: process.env.REACT_APP_SERVER_PORT })
+      //const response = await axios.post(`${process.env.REACT_APP_SERVER_PORT}/auth/login`, { email, password });
+      // console.log('login successful:', response.data);
+      // await checkCondition(true);
+      await onSubmit({ email, password });
+    } catch (error) {
+      console.error('Error creating task:', error);
+    }
+  };
 
   return (
     <div style={styles.overlay}>
@@ -18,14 +49,30 @@ const LoginModal = ({ isOpen, onClose, onSubmit, onSignUp }) => {
             onClick={onClose}
           />
         </div>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={submitFormData}>
           <div style={styles.inputGroup}>
             <label>Email:</label>
-            <input type="email" required style={styles.input} />
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              required
+              style={styles.input}
+            />
           </div>
           <div style={styles.inputGroup}>
             <label>Password:</label>
-            <input type="password" required style={styles.input} />
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              required
+              style={styles.input}
+            />
           </div>
           <button type="submit" style={styles.submitButton}>
             Submit
@@ -33,6 +80,7 @@ const LoginModal = ({ isOpen, onClose, onSubmit, onSignUp }) => {
           <button
             onClick={(e) => {
               onSignUp(e);
+              //onSignUp(e);
             }}
             style={styles.submitButton}
           >

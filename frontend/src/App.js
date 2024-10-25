@@ -6,7 +6,7 @@ import GetStarted from './pages/getstated';
 import './App.css';
 
 const App = () => {
-  const isLoggedIn = false;
+  const isLoggedIn = true;
 
   return (
     <div id="mobile-screen">

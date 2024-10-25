@@ -11,7 +11,7 @@ import axios from 'axios';
 import { addTask } from '../../redux/slice/taskslice';
 import { useDispatch } from 'react-redux';
 
-const AddTask = ({ isOpen, onClose }) => {
+const EditTask = ({ isOpen, onClose, data }) => {
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
   const [taskDate, setTaskDate] = useState(null);
@@ -257,4 +257,4 @@ const styles = {
   },
 };
 
-export default AddTask;
+export default EditTask;

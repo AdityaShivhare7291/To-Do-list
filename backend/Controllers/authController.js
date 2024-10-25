@@ -1,8 +1,6 @@
 const User = require('../Models/Users.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { v4: uuidv4 } = require('uuid');
-const Tokens = require('../Models/Tokens.js');
 
 class AuthController {
   hashPassword = async (password) => {
@@ -50,19 +48,7 @@ class AuthController {
       const userToken = jwt.sign(payload, secretKey, { expiresIn: '7d' }); // Token expires in 4 hour
       const userId = uuidv4();
 
-      res.cookie('authToken', userToken, {
-        httpOnly: true,
-        sameSite: 'Strict',
-        maxAge: 3600000 * 24 * 7, // 7 days
-      });
-
-      await Tokens.create({
-        userId,
-        token: userToken,
-        expirationTime: new Date(Date.now() + 60 * 60 * 1000 * 24 * 7), // 1 hour expiration
-      });
-
-      return res.status(200).json({ userId });
+      return res.status(200).json({ userToken });
     } catch (e) {
       console.log(e);
       res.status(500).json({ message: 'INternal Server Error' });
@@ -102,23 +88,9 @@ class AuthController {
 
     const userToken = jwt.sign(payload, secretKey, { expiresIn: '7d' });
 
-    res.cookie('authToken', userToken, {
-      httpOnly: true,
-      sameSite: 'Strict',
-      maxAge: 3600000 * 24 * 7, // 7 days
-    });
-
-    const userId = uuidv4();
-
-    await Tokens.create({
-      userId,
-      token: userToken,
-      expirationTime: new Date(Date.now() + 60 * 60 * 1000 * 24 * 7), // 1 hour expiration
-    });
-
     return res
       .status(200)
-      .json({ message: 'successfully logged in', user: userId });
+      .json({ message: 'successfully logged in', user: userToken });
   };
 }
 
