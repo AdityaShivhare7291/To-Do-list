@@ -14,7 +14,7 @@
     padding: 2%;                 /* Padding inside the container */
     max-width: 162px;              /* Maximum width for the container */
     max-height: 96px;              /* Maximum height for the container */
-    margin: 5px;                  /* Margin around each container */
+    margin: 0px;                  /* Margin around each container */
 }
 
 .progress-task-completed-container img {
@@ -24,7 +24,7 @@
 }
 
 .progress-task-completed-container div {
-    padding: 8px;                  /* Padding for text container */
+    padding: 4px;                  /* Padding for text container */
 }
 
 .progress-task-completed-container h3 {
