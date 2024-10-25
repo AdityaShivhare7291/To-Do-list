@@ -3,6 +3,7 @@ import SearchBar from "../components/searchbar";
 import Slider from "../components/slider";
 import Progress from "../components/boxes";
 import WorkProgress from '../components/progress'
+import TaskList from "../components/taskList/taskList";
 
 function DashBoard() {
     return <div style={{ padding: "10px" }}>
@@ -12,6 +13,8 @@ function DashBoard() {
         <Progress />
         <br />
         <WorkProgress />
+        <br />
+        <TaskList />
     </div>
 }
 

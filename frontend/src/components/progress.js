@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './boxes.css';
 import './progress.css';
 
 const Progress = () => {
 
-    const setProgress = (percentage) => {
-        const progressBar = document.querySelector('.progress-1-bar');
-        progressBar.style.width = `${percentage}%`;
-    }
-    setProgress(60);
+    useEffect(() => {
+        const setProgress = (percentage) => {
+            const progressBar = document.querySelector('.progress-1-bar');
+            if (progressBar)
+                progressBar.style.width = `${percentage}%`;
+        }
+        setProgress(60);
+    }, [])
+
+
 
     return (
         <div className="progress-1-container">
