@@ -6,13 +6,16 @@ import WorkProgress from '../components/progress';
 import TaskList from '../components/taskList/taskList';
 import AddIcon from '../static/add.png';
 import AddTask from '../components/addtask/addtask';
+import EditTask from '../components/edittask/edittask';
+import { useSelector, useDispatch } from 'react-redux';
+import { close } from '../redux/slice/editslice';
 
 function DashBoard() {
-  const [isAddNewTaskOpen, SetisAddNewTaskOpen] = useState(false);
 
-  const handleAddNewTaskSubmit = () => {
-    console.log('Close handle add new task');
-  };
+  const [isAddNewTaskOpen, SetisAddNewTaskOpen] = useState(false);
+  const isEditTaskOpen = useSelector((state) => state.editTask.edittask);
+  console.log({ isEditTaskOpen })
+  const dispatch = useDispatch();
 
   return (
     <div style={{ padding: '10px' }}>
@@ -61,6 +64,7 @@ function DashBoard() {
         isOpen={isAddNewTaskOpen}
         onClose={() => SetisAddNewTaskOpen(false)}
       />
+      <EditTask isOpen={isEditTaskOpen} onClose={() => dispatch(close())} />
     </div>
   );
 }

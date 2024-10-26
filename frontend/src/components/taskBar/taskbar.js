@@ -3,11 +3,14 @@ import Checkbox from '@mui/material/Checkbox';
 import Trash from '../../static/trash-2.png';
 import Edit from '../../static/edit.png';
 import './taskbar.css';
-import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { open } from '../../redux/slice/editslice';
 
 const TaskBar = ({ task, deleteTask }) => {
   console.log({ task });
   const [checked, setChecked] = React.useState(false);
+
+  const dispatch = useDispatch();
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
@@ -58,7 +61,7 @@ const TaskBar = ({ task, deleteTask }) => {
           src={Edit}
           alt="Right Image"
           onClick={() => {
-            console.log('Clicked On Trash');
+            dispatch(open(task._id))
           }}
           style={{
             display: 'inline-block',
