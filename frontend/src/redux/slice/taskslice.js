@@ -10,13 +10,12 @@ const taskSlice = createSlice({
   reducers: {
     addTask: (state, action) => {
       const newState = [];
-      newState.push_back(action.payload);
-      newState.push_back(state.tasks).flat();
-      state.tasks = newState; // Add new task
+      newState.push(action.payload);
+      state.tasks = [...newState, ...state.tasks]; // Add new task
     },
     updateTask: (state, action) => {
       const { taskId, updatedTask } = action.payload;
-      const existingTask = state.tasks.find((task) => task.id === taskId);
+      const existingTask = state.tasks.find((task) => task._id === taskId);
       if (existingTask) {
         Object.assign(existingTask, updatedTask); // Update task properties
       }

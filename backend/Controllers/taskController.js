@@ -5,12 +5,10 @@ class TaskController {
     const { title, description, startTime, endTime, date } = req.body;
 
     if (!req.user._id) {
-      return res
-        .status(403)
-        .json({
-          message:
-            'some error occurred user information is not availaible to insert user data',
-        });
+      return res.status(403).json({
+        message:
+          'some error occurred user information is not availaible to insert user data',
+      });
     }
 
     if (!title || !description || !startTime || !endTime) {
@@ -35,20 +33,18 @@ class TaskController {
 
   getRecentTasks = async (req, res) => {
     try {
-      const n = 4; // `n` is passed as a query parameter
-
       if (!req.user || !req.user._id) {
         return res.status(403).json({
           message: 'User information is not available',
         });
       }
 
-      const recentTasks = await Tasks.find({ User: req.user._id })
-        .sort({ createdAt: -1 })
-        .limit(Number(n))
-        .select('-startTime -endTime -date');
+      const recentTasks = await Tasks.find({ User: req.user._id }).sort({
+        createdAt: -1,
+      });
+
       return res.status(200).json({
-        message: `Successfully fetched ${n} recent tasks`,
+        message: `Successfully fetched ${0} recent tasks`,
         tasks: recentTasks,
       });
     } catch (error) {
@@ -75,6 +71,46 @@ class TaskController {
       console.error(error);
       return res.status(500).json({
         message: 'An error occurred while fetching recent tasks',
+      });
+    }
+  };
+
+  updateTask = async (req, res) => {
+    try {
+      // Ensure user is authorized
+      if (!req.user || !req.user._id) {
+        return res.status(403).json({
+          message: 'User information is not available',
+        });
+      }
+
+      // Extract task ID and the update data
+      const { id } = req.params;
+      const updateData = req.body;
+
+      // Find and update the task by ID
+      const updatedTask = await Tasks.findByIdAndUpdate(
+        id,
+        { $set: updateData },
+        { new: true } // Return the updated task document
+      );
+
+      // If the task is not found, return a 404 error
+      if (!updatedTask) {
+        return res.status(404).json({
+          message: 'Task not found',
+        });
+      }
+
+      // Return success response with updated task
+      return res.status(200).json({
+        message: `Successfully updated task with ID: ${id}`,
+        task: updatedTask,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+        message: 'An error occurred while updating the task',
       });
     }
   };
