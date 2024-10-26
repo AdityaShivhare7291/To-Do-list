@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 // Import Font Awesome components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const SignUpModal = ({ isOpen, onClose, onSubmit }) => {
+
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   if (!isOpen) return null; // Don't render the modal if it's not open
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    onSubmit({ username, email, password });
+    setUsername('');
+    setEmail('');
+    setPassword('');
+  };
+
 
   return (
     <div style={styles.overlay}>
@@ -18,18 +32,36 @@ const SignUpModal = ({ isOpen, onClose, onSubmit }) => {
             onClick={onClose}
           />
         </div>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={handleFormSubmit}>
           <div style={styles.inputGroup}>
             <label>Username:</label>
-            <input type="text" required style={styles.input} />
+            <input
+              type="text"
+              required
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              style={styles.input}
+            />
           </div>
           <div style={styles.inputGroup}>
             <label>Email:</label>
-            <input type="email" required style={styles.input} />
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={styles.input}
+            />
           </div>
           <div style={styles.inputGroup}>
             <label>Password:</label>
-            <input type="password" required style={styles.input} />
+            <input
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={styles.input}
+            />
           </div>
           <button type="submit" style={styles.submitButton}>
             Submit

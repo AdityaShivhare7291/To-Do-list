@@ -46,7 +46,7 @@ class AuthController {
       };
 
       const userToken = jwt.sign(payload, secretKey, { expiresIn: '7d' }); // Token expires in 4 hour
-      const userId = uuidv4();
+
 
       return res.status(200).json({ userToken });
     } catch (e) {

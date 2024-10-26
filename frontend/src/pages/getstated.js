@@ -11,6 +11,10 @@ function GetStarted() {
   const [isSignUpOpen, setSignUpOpen] = useState(false);
   const navigate = useNavigate();
 
+  async function wait(seconds) {
+    return new Promise(resolve => setTimeout(resolve, seconds * 1000));
+  }
+
   const handleLoginSubmit = async ({ email, password }) => {
     // Handle login logic here
     setLoginOpen(false);
@@ -20,16 +24,38 @@ function GetStarted() {
     );
     console.log({ response });
     if (response.data) {
-      navigate('/dashboard');
+
       localStorage.setItem('authToken-todo', response.data.user);
+      console.log("code is waiting");
+      await wait(1)
+
+      console.log("code is passed", localStorage);
+      navigate('/dashboard');
+
     }
     // Navigate to home after login
   };
 
-  const handleSignUpSubmit = (e) => {
+  const handleSignUpSubmit = async ({ username, email, password }) => {
     // Handle signup logic here
     setSignUpOpen(false);
-    navigate('/dashboard'); // Navigate to home after signup
+
+    const response = await axios.post(
+      `${process.env.REACT_APP_SERVER_PORT}/auth/signup`,
+      { email, password, name: username }
+    );
+    console.log({ response });
+    if (response.data) {
+
+      localStorage.setItem('authToken-todo', response.data.userToken);
+      console.log("code is waiting");
+      await wait(1)
+
+      console.log("code is passed", localStorage.getItem('authToken-todo'));
+      navigate('/dashboard');
+
+    }
+
   };
 
   const onSignUp = (e) => {

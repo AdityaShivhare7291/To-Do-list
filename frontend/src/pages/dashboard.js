@@ -16,7 +16,9 @@ function DashBoard() {
   const [isAddNewTaskOpen, SetisAddNewTaskOpen] = useState(false);
   const isEditTaskOpen = useSelector((state) => state.editTask.edittask);
 
-  console.log({ isEditTaskOpen });
+
+
+  console.log({ isEditTaskOpen })
 
   const dispatch = useDispatch();
 

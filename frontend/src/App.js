@@ -9,8 +9,13 @@ import './App.css';
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('authToken-todo'));
 
+  function check() {
+    return !!localStorage.getItem('authToken-todo')
+  }
+
   useEffect(() => {
     const handleStorageChange = () => {
+      console.log("it runs or not")
       setIsLoggedIn(!!localStorage.getItem('authToken-todo'));
     };
 
@@ -27,11 +32,11 @@ const App = () => {
       <Routes>
         <Route
           path="/"
-          element={isLoggedIn ? <DashBoard /> : <Navigate to="/getstarted" />}
+          element={check() ? <DashBoard /> : <Navigate to="/getstarted" />}
         />
         <Route path="/getstarted" element={<GetStarted />} />
-        <Route path="/dashboard" element={isLoggedIn ? <DashBoard /> : <Navigate to="/getstarted" />} />
-        <Route path="/viewAllTasks" element={isLoggedIn ? <ViewAllTasks /> : <Navigate to="/getstarted" />} />
+        <Route path="/dashboard" element={check() ? <DashBoard /> : <Navigate to="/getstarted" />} />
+        <Route path="/viewAllTasks" element={check() ? <ViewAllTasks /> : <Navigate to="/getstarted" />} />
       </Routes>
     </div>
   );
