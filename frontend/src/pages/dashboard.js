@@ -9,15 +9,17 @@ import AddTask from '../components/addtask/addtask';
 import EditTask from '../components/edittask/edittask';
 import { useSelector, useDispatch } from 'react-redux';
 import { close } from '../redux/slice/editslice';
+
 import SearchTaskList from '../components/searchModal/searchModal';
 
 function DashBoard() {
-
   const [isAddNewTaskOpen, SetisAddNewTaskOpen] = useState(false);
   const isEditTaskOpen = useSelector((state) => state.editTask.edittask);
 
 
+
   console.log({ isEditTaskOpen })
+
   const dispatch = useDispatch();
 
   return (
