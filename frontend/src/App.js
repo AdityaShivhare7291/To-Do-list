@@ -7,7 +7,7 @@ import ViewAllTasks from './pages/viewAllTasks';
 import './App.css';
 
 const App = () => {
-  const isLoggedIn = true;
+  const isLoggedIn = localStorage.getItem('authToken-todo');
 
   return (
     <div id="mobile-screen">
@@ -17,10 +17,10 @@ const App = () => {
           element={isLoggedIn ? <DashBoard /> : <Navigate to="/GetStarted" />}
         />
 
-        <Route path="/GetStarted" element={<GetStarted />} />
+        <Route path="/GetStarted" element={isLoggedIn ? <GetStarted /> : <Navigate to="/GetStarted" />} />
 
-        <Route path="/dashboard" element={<DashBoard />} />
-        <Route path="/viewAllTasks" element={<ViewAllTasks />} />
+        <Route path="/dashboard" element={isLoggedIn ? <DashBoard /> : <Navigate to="/GetStarted" />} />
+        <Route path="/viewAllTasks" element={isLoggedIn ? <ViewAllTasks /> : <Navigate to="/GetStarted" />} />
 
         {/* <Route path="/about" element={<AboutPage />} />
         <Route path="*" element={<NotFoundPage />} /> */}

@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 8080;
 const corsOptions = {
   origin: [
     'http://localhost:3000',
-    'https://to-do-list-seven-sand.vercel.app/',
+    'https://to-do-list-seven-sand.vercel.app',
   ], // Allow this origin
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify the allowed HTTP methods
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
