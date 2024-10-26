@@ -1,19 +1,21 @@
-import React from 'react';
-import '../components/taskList/taskList.css';
-import './viewAllTasks.css';
-import TaskBar from '../components/taskBar/taskbar';
+import React, { useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { search } from '../../redux/slice/searchSlice';
+import { deleteTask } from '../../redux/slice/taskslice';
+import './searchTaskList.css';
+import TaskBar from '../taskBar/taskbar';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteTask } from '../redux/slice/taskslice';
-import { useNavigate } from 'react-router-dom';
-import { close } from '../redux/slice/editslice';
-import EditTask from '../components/edittask/edittask';
 
-function ViewAllTasks() {
+const SearchTaskList = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   const tasks = useSelector((state) => state.taskList.tasks);
-  const isEditTaskOpen = useSelector((state) => state.editTask.edittask);
+  const searchTerm = useSelector((state) => state.searchTask.task);
+  const searchBarRef = useRef(null);
+
+  const filteredTasks = tasks.filter((task) =>
+    task.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const deleteTasky = async (id) => {
     try {
@@ -22,7 +24,7 @@ function ViewAllTasks() {
         `${process.env.REACT_APP_SERVER_PORT}/tasks/deleteTask/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`, // Add the token in the headers
           },
         }
       );
@@ -33,21 +35,17 @@ function ViewAllTasks() {
     }
   };
 
+  const closeModal = () => {
+    dispatch(search(''));
+  };
+
+  if (searchTerm === '') return null;
+
   return (
-    <div>
-      <div className="task-container-1">
-        <p style={{ fontSize: '18px', fontWeight: '600' }}>Tasks Today</p>
-        <p
-          style={{ fontSize: '11px', fontWeight: '400', color: 'blue' }}
-          onClick={() => {
-            navigate('/dashboard');
-          }}
-        >
-          Go Back
-        </p>
-      </div>
-      <div className="task-scroll-container">
-        {tasks.map((item) => {
+    <div className="modal-content-below" onClick={(e) => e.stopPropagation()}>
+      <h3>Search Results</h3>
+      {filteredTasks.length > 0 ? (
+        filteredTasks.map((item) => {
           if (new Date(item.date).getDate() === new Date().getDate()) {
             let line = 'none';
             let checked = false;
@@ -75,11 +73,15 @@ function ViewAllTasks() {
             );
           }
           return null; // Return null if no conditions are met
-        })}
-      </div>
-      <EditTask isOpen={isEditTaskOpen} onClose={() => dispatch(close())} />
+        })
+      ) : (
+        <p>No tasks found.</p>
+      )}
+      <button className="close-btn" onClick={closeModal}>
+        Close
+      </button>
     </div>
   );
-}
+};
 
-export default ViewAllTasks;
+export default SearchTaskList;

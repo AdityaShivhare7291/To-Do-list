@@ -3,24 +3,23 @@ import React, { useState } from 'react';
 // Import Font Awesome components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { search } from '../redux/slice/searchSlice';
 
-const SearchBar = ({ onSearch }) => {
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    onSearch(searchQuery);
-    setSearchQuery(''); // Clear the search input after submission
-  };
+const SearchBar = () => {
+  const searchQuery = useSelector((state) => state.searchTask.task);
+  const dispatch = useDispatch();
 
   return (
-    <form onSubmit={handleSearch} style={styles.form}>
+    <form style={styles.form}>
       <div style={styles.inputContainer}>
         <input
           type="text"
           placeholder="Search for a task"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={(e) => {
+            dispatch(search({ task: e.target.value }));
+          }}
           style={styles.input}
         />
         <FontAwesomeIcon icon={faSearch} style={styles.icon} />

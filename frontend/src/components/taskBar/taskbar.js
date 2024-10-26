@@ -7,8 +7,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { open } from '../../redux/slice/editslice';
 
 const TaskBar = ({ task, deleteTask, styled }) => {
-  console.log({ task });
+  console.log({ styled });
   const dispatch = useDispatch();
+
+  if (!styled.bg) return;
 
   return (
     <div style={{ backgroundColor: styled.bg }}>
@@ -20,7 +22,12 @@ const TaskBar = ({ task, deleteTask, styled }) => {
       </div>
       <div style={{ display: 'inline-block' }} className="task-title">
         <p
-          style={{ fontFamily: 'poppins', fontSize: '14px', fontWeight: '500', textDecoration: styled.line }}
+          style={{
+            fontFamily: 'poppins',
+            fontSize: '14px',
+            fontWeight: '500',
+            textDecoration: styled.line,
+          }}
         >
           {task?.title ?? 'hello'}
         </p>
@@ -29,7 +36,7 @@ const TaskBar = ({ task, deleteTask, styled }) => {
         style={{
           float: 'right',
           position: 'relative',
-          top: '6px',
+          top: '9px',
           right: '24px',
         }}
         className="task-icons"
