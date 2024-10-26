@@ -11,18 +11,7 @@ const LoginModal = ({ isOpen, onClose, onSubmit, onSignUp }) => {
 
   if (!isOpen) return null; // Don't render the modal if it's not open
 
-  function checkCondition(condition) {
-    return new Promise((resolve, reject) => {
-      // Simulate an asynchronous operation
-      setTimeout(() => {
-        if (condition) {
-          resolve('Condition is true!'); // Resolve the promise if condition is true
-        } else {
-          reject(new Error('Condition is false!')); // Reject the promise if condition is false
-        }
-      }, 10000); // Simulate a 1-second delay
-    });
-  }
+
 
   const submitFormData = async (e) => {
     try {
