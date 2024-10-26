@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SearchBar from '../components/searchbar';
 import Slider from '../components/slider/slider';
-import Progress from '../components/boxes';
+import Progress from '../components/boxes/boxes';
 import WorkProgress from '../components/progress';
 import TaskList from '../components/taskList/taskList';
 import AddIcon from '../static/add.png';
@@ -16,9 +16,7 @@ function DashBoard() {
   const [isAddNewTaskOpen, SetisAddNewTaskOpen] = useState(false);
   const isEditTaskOpen = useSelector((state) => state.editTask.edittask);
 
-
-
-  console.log({ isEditTaskOpen })
+  console.log({ isEditTaskOpen });
 
   const dispatch = useDispatch();
 

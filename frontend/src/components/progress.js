@@ -1,15 +1,18 @@
 import React, { useEffect } from 'react';
-import './boxes.css';
+import './boxes/boxes.css';
 import './progress.css';
+import { useSelector } from 'react-redux';
 
 const Progress = () => {
+  const progress = useSelector((state) => state.analyticTask.progresspercent);
+
   useEffect(() => {
     const setProgress = (percentage) => {
       const progressBar = document.querySelector('.progress-1-bar');
       if (progressBar) progressBar.style.width = `${percentage}%`;
     };
-    setProgress(60);
-  }, []);
+    setProgress(progress);
+  }, [progress]);
 
   return (
     <div className="progress-1-container">

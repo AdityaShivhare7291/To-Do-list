@@ -13,8 +13,9 @@ const SearchTaskList = () => {
   const searchTerm = useSelector((state) => state.searchTask.task);
   const searchBarRef = useRef(null);
 
-  const filteredTasks = tasks.filter((task) =>
-    task.title.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredTasks = tasks.filter(
+    (task) =>
+      task?.title?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false
   );
 
   const deleteTasky = async (id) => {
@@ -36,7 +37,7 @@ const SearchTaskList = () => {
   };
 
   const closeModal = () => {
-    dispatch(search(''));
+    dispatch(search({ task: '' }));
   };
 
   if (searchTerm === '') return null;

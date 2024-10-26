@@ -48,7 +48,8 @@ function ViewAllTasks() {
       </div>
       <div className="task-scroll-container">
         {tasks.map((item) => {
-          if (new Date(item.date).getDate() === new Date().getDate()) {
+          console.log('items are', tasks);
+          if (true) {
             let line = 'none';
             let checked = false;
             let bg = 'transparent';
@@ -58,8 +59,7 @@ function ViewAllTasks() {
               checked = true;
             } else if (item.status === 'closed') {
               bg = '#ff000045';
-            }
-            if (item.status === 'progress') {
+            } else if (item.status === 'progress') {
               line = 'none';
               checked = true;
               bg = '#0000ff47';

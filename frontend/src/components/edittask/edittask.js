@@ -37,7 +37,7 @@ const EditTask = ({ isOpen = false, onClose }) => {
 
       const day = new Date(editTaskData.date);
       const dayDate = day.getDay();
-      const monDate = day.getMonth() + 1;
+      const monDate = day.getMonth();
       const yearDate = day.getFullYear();
       setTaskDate(dayjs().day(dayDate).month(monDate).year(yearDate));
 
