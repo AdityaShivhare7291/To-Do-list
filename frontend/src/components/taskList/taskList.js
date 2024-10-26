@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './taskList.css';
-import TaskBar from '../taskBar/taskbar';
+import TaskBar from '../../components/taskBar/taskbar';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTask, deleteTask, setTasks } from '../../redux/slice/taskslice';
+import { useNavigate } from 'react-router-dom';
 
 function TaskList() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const tasks = useSelector((state) => state.taskList.tasks);
 
   const fetchData = async () => {
@@ -59,14 +61,22 @@ function TaskList() {
     <div>
       <div className="task-container-1">
         <p style={{ fontSize: '18px', fontWeight: '600' }}>Tasks Today</p>
-        <p style={{ fontSize: '11px', fontWeight: '400', color: 'blue' }}>
+        <p
+          style={{ fontSize: '11px', fontWeight: '400', color: 'blue' }}
+          onClick={() => {
+            navigate('/viewAllTasks');
+          }}
+        >
           View All
         </p>
       </div>
       <div>
-        {tasks?.slice(0, 4).map((item, index) => {
-          return <TaskBar task={item} deleteTask={deleteTasky} />;
-        })}
+        {tasks
+          .map((item, index) => {
+            if (new Date(item.date).getDate() === new Date().getDate())
+              return <TaskBar task={item} deleteTask={deleteTasky} />;
+          })
+          .slice(0, 4)}
       </div>
     </div>
   );

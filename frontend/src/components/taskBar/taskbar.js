@@ -61,7 +61,7 @@ const TaskBar = ({ task, deleteTask }) => {
           src={Edit}
           alt="Right Image"
           onClick={() => {
-            dispatch(open(task._id))
+            dispatch(open({ taskId: task._id, task: task }));
           }}
           style={{
             display: 'inline-block',

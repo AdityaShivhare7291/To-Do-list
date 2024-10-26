@@ -20,6 +20,7 @@ const App = () => {
 
         <Route path="/dashboard" element={<DashBoard />} />
 
+
         {/* <Route path="/about" element={<AboutPage />} />
         <Route path="*" element={<NotFoundPage />} /> */}
       </Routes>

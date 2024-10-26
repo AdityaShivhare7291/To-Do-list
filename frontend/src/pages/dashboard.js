@@ -3,7 +3,7 @@ import SearchBar from '../components/searchbar';
 import Slider from '../components/slider';
 import Progress from '../components/boxes';
 import WorkProgress from '../components/progress';
-import TaskList from '../components/taskList/taskList';
+import TaskList from './veiwAllTodayTasks/taskList';
 import AddIcon from '../static/add.png';
 import AddTask from '../components/addtask/addtask';
 import EditTask from '../components/edittask/edittask';
@@ -11,10 +11,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { close } from '../redux/slice/editslice';
 
 function DashBoard() {
-
   const [isAddNewTaskOpen, SetisAddNewTaskOpen] = useState(false);
   const isEditTaskOpen = useSelector((state) => state.editTask.edittask);
-  console.log({ isEditTaskOpen })
+  console.log({ isEditTaskOpen });
   const dispatch = useDispatch();
 
   return (
