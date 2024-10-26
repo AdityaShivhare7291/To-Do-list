@@ -74,7 +74,7 @@ function TaskList() {
         {tasks
           .map((item, index) => {
             if (new Date(item.date).getDate() === new Date().getDate())
-              return <TaskBar task={item} deleteTask={deleteTasky} />;
+              return <TaskBar task={item} deleteTask={deleteTasky} checked={false} />;
           })
           .slice(0, 4)}
       </div>

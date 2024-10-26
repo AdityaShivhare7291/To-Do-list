@@ -6,22 +6,19 @@ import './taskbar.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { open } from '../../redux/slice/editslice';
 
-const TaskBar = ({ task, deleteTask }) => {
+const TaskBar = ({ task, deleteTask, checked }) => {
   console.log({ task });
-  const [checked, setChecked] = React.useState(false);
+
 
   const dispatch = useDispatch();
 
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-  };
+
 
   return (
     <div>
       <div className="task-checkbox">
         <Checkbox
           checked={checked}
-          onChange={handleChange}
           inputProps={{ 'aria-label': 'controlled' }}
         />
       </div>
