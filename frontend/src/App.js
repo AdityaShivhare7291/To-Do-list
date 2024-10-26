@@ -17,7 +17,7 @@ const App = () => {
           element={isLoggedIn ? <DashBoard /> : <Navigate to="/GetStarted" />}
         />
 
-        <Route path="/GetStarted" element={isLoggedIn ? <GetStarted /> : <Navigate to="/GetStarted" />} />
+        <Route path="/GetStarted" element={<GetStarted />} />
 
         <Route path="/dashboard" element={isLoggedIn ? <DashBoard /> : <Navigate to="/GetStarted" />} />
         <Route path="/viewAllTasks" element={isLoggedIn ? <ViewAllTasks /> : <Navigate to="/GetStarted" />} />
