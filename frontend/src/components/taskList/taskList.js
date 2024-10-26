@@ -35,9 +35,40 @@ function TaskList() {
     }
   };
 
+  const updateData = async (editTaskData) => {
+    try {
+      // Send the data to the server
+      console.log({ server: process.env.REACT_APP_SERVER_PORT });
+      const token = localStorage.getItem('authToken-todo');
+      const id = editTaskData._id;
+
+      const response = await axios.put(
+        `${process.env.REACT_APP_SERVER_PORT}/tasks/updateTask/${id}`, editTaskData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Add the token in the headers
+          },
+        }
+      );
+      console.log('Task updated successfully:', response.data);
+    } catch (error) {
+      console.error('Error creating task:', error);
+    }
+  }
+
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    for (let i = 0; i < tasks?.length; i++) {
+      if (tasks.status === 'open' && ((new Date().getDate() >= new Date(tasks.date).getDate()) && (new Date().getMonth() >= new Date(tasks.endTime).getHours()) && (new Date().getHours() >= new Date(tasks.endTime).getHours()))) {
+        tasks[i].status = 'closed';
+        updateData(tasks);
+      }
+    }
+    dispatch(setTasks(tasks));
+  }, [tasks])
 
   const deleteTasky = async (id) => {
     try {
@@ -73,8 +104,15 @@ function TaskList() {
       <div>
         {tasks
           .map((item, index) => {
-            if (new Date(item.date).getDate() === new Date().getDate())
-              return <TaskBar task={item} deleteTask={deleteTasky} checked={false} />;
+            if (new Date(item.date).getDate() === new Date().getDate()) {
+              if (item.status === 'complete') {
+                return <TaskBar task={item} deleteTask={deleteTasky} styled={{ line: 'line-through', checked: true, bg: "transparent" }} />;
+              }
+              if (item.status === 'open') {
+                return <TaskBar task={item} deleteTask={deleteTasky} styled={{ line: 'none', checked: false, bg: "transparent" }} />;
+              }
+            }
+            return <TaskBar task={item} deleteTask={deleteTasky} checked={false} />;
           })
           .slice(0, 4)}
       </div>

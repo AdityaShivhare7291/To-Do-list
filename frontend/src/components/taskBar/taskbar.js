@@ -6,25 +6,21 @@ import './taskbar.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { open } from '../../redux/slice/editslice';
 
-const TaskBar = ({ task, deleteTask, checked }) => {
+const TaskBar = ({ task, deleteTask, styled }) => {
   console.log({ task });
-
-
   const dispatch = useDispatch();
 
-
-
   return (
-    <div>
+    <div style={{ backgroundColor: styled.bg }}>
       <div className="task-checkbox">
         <Checkbox
-          checked={checked}
+          checked={styled.checked}
           inputProps={{ 'aria-label': 'controlled' }}
         />
       </div>
       <div style={{ display: 'inline-block' }} className="task-title">
         <p
-          style={{ fontFamily: 'poppins', fontSize: '14px', fontWeight: '500' }}
+          style={{ fontFamily: 'poppins', fontSize: '14px', fontWeight: '500', textDecoration: styled.line }}
         >
           {task?.title ?? 'hello'}
         </p>

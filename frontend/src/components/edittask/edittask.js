@@ -217,7 +217,7 @@ const EditTask = ({ isOpen = false, onClose }) => {
                             >
                                 <option value="open">Open</option>
                                 <option value="complete">Complete</option>
-                                <option value="close">Expired</option>
+                                <option value="closed">Close</option>
                             </select>
                         </div>
 

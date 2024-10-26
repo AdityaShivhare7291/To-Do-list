@@ -46,8 +46,17 @@ function ViewAllTasks() {
             <div>
                 {tasks
                     .map((item, index) => {
-                        if (new Date(item.date).getDate() === new Date().getDate())
-                            return <TaskBar task={item} deleteTask={deleteTasky} />;
+
+                        if (item.status === 'complete') {
+                            return <TaskBar task={item} deleteTask={deleteTasky} styled={{ line: 'line-through', checked: true, bg: "transparent" }} />;
+                        }
+                        if (item.status === 'open') {
+                            return <TaskBar task={item} deleteTask={deleteTasky} styled={{ line: 'none', checked: false, bg: "transparent" }} />;
+                        }
+                        if (item.staus === 'closed') {
+                            return <TaskBar task={item} deleteTask={deleteTasky} styled={{ line: 'none', checked: false, bg: "transparent" }} />;
+                        }
+
                     })
                 }
             </div>
