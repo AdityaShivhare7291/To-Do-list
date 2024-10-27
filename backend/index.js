@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => { return res.send(<h1>hello</h1>) })
+app.route('/', (req, res) => { return res.send("hello") })
 
 app.use(cors({
   origin: '*'
