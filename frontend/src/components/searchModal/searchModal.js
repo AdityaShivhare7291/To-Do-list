@@ -11,7 +11,6 @@ const SearchTaskList = () => {
 
   const tasks = useSelector((state) => state.taskList.tasks);
   const searchTerm = useSelector((state) => state.searchTask.task);
-  const searchBarRef = useRef(null);
 
   const filteredTasks = tasks.filter(
     (task) =>
@@ -44,7 +43,7 @@ const SearchTaskList = () => {
 
   return (
     <div className="modal-content-below" onClick={(e) => e.stopPropagation()}>
-      <h3>Search Results</h3>
+      <h3>All Search Results for Week</h3>
       {filteredTasks.length > 0 ? (
         filteredTasks.map((item) => {
           if (new Date(item.date).getDate() === new Date().getDate()) {

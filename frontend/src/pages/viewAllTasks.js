@@ -15,6 +15,13 @@ function ViewAllTasks() {
   const tasks = useSelector((state) => state.taskList.tasks);
   const isEditTaskOpen = useSelector((state) => state.editTask.edittask);
 
+  const startDateWeek = useSelector(
+    (state) => state.analyticTask.weekFirstDate
+  );
+  const lastDateWeek = useSelector((state) => state.analyticTask.weekLastDate);
+  const currentMonth = useSelector((state) => state.analyticTask.currentMonth);
+  const currentYear = useSelector((state) => state.analyticTask.currentYear);
+
   const deleteTasky = async (id) => {
     try {
       const token = localStorage.getItem('authToken-todo');
@@ -48,31 +55,36 @@ function ViewAllTasks() {
       </div>
       <div className="task-scroll-container">
         {tasks.map((item) => {
-          console.log('items are', tasks);
-          if (true) {
-            let line = 'none';
-            let checked = false;
-            let bg = 'transparent';
+          if (currentMonth === new Date(item.date).getMonth() + 1 &&
+            currentYear === new Date(item.date).getFullYear() &&
+            startDateWeek <= new Date(item.date).getDate() &&
+            lastDateWeek >= new Date(item.date).getDate()) {
+            console.log('items are', tasks);
+            if (true) {
+              let line = 'none';
+              let checked = false;
+              let bg = 'transparent';
 
-            if (item.status === 'complete') {
-              line = 'line-through';
-              checked = true;
-            } else if (item.status === 'closed') {
-              bg = '#ff000045';
-            } else if (item.status === 'progress') {
-              line = 'none';
-              checked = true;
-              bg = '#0000ff47';
+              if (item.status === 'complete') {
+                line = 'line-through';
+                checked = true;
+              } else if (item.status === 'closed') {
+                bg = '#ff000045';
+              } else if (item.status === 'progress') {
+                line = 'none';
+                checked = true;
+                bg = '#0000ff47';
+              }
+
+              return (
+                <TaskBar
+                  key={item._id} // Add a key prop to uniquely identify each task
+                  task={item}
+                  deleteTask={deleteTasky}
+                  styled={{ line, checked, bg }}
+                />
+              );
             }
-
-            return (
-              <TaskBar
-                key={item._id} // Add a key prop to uniquely identify each task
-                task={item}
-                deleteTask={deleteTasky}
-                styled={{ line, checked, bg }}
-              />
-            );
           }
           return null; // Return null if no conditions are met
         })}
