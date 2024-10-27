@@ -18,6 +18,8 @@ const PORT = process.env.PORT || 8080;
 
 // Connect to MongoDB using the URI from .env
 
+app.options('*', cors());
+
 const corsOptions = {
   origin: 'https://to-do-list-seven-sand.vercel.app',
   // Allow this origin
