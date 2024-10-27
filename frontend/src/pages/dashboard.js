@@ -43,12 +43,12 @@ function DashBoard() {
 
   const runner = (weekNo) => {
     const starty = DateCalc.calculateDate(selectedYear, selectedMonth, weekNo)
-    console.log("starty", { starty, selectedYear, selectedWeek, selectedMonth })
+    console.log("starty", { starty, selectedYear: Number(selectedYear), selectedWeek, selectedMonth })
     dispatch(updateAnalyticsCriteria({
       weekFirstDate: starty.startDate,
       weekLastDate: starty.enddate,
       currentMonth: Number(selectedMonth),
-      currentYear: Number(currentYear)
+      currentYear: Number(selectedYear)
     }))
   }
   useEffect(() => {

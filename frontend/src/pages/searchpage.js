@@ -12,7 +12,6 @@ const SearchTaskList = ({ searchTerm }) => {
   const currentMonth = useSelector((state) => state.analyticTask.currentMonth);
   const currentYear = useSelector((state) => state.analyticTask.currentYear);
 
-  // Filter tasks based on the search term
   const filteredTasks = tasks.filter((task) => {
     if (currentMonth === new Date(element.date).getMonth() + 1 &&
       currentYear === new Date(element.date).getFullYear() &&

@@ -37,6 +37,8 @@ function calculateDate(year, month, week) {
 
     console.log("remaining days", { remainingDays, startDate, firstDayOfWeek })
 
+
+
     if (week === 1) {
         return { startDate: 1, enddate: startDate - 1 };
     }

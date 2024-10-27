@@ -13,31 +13,30 @@ const SliderComponent = () => {
   const currentMonth = useSelector((state) => state.analyticTask.currentMonth);
   const currentYear = useSelector((state) => state.analyticTask.currentYear)
 
-  function getWeekDaysFromDate(date, endDate) {
-    console.log("today's date", date)
+  function getWeekDaysFromDate(startDate, endDate) {
+
     const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const week = [];
 
-    let startDateWeeks = 11111111111;
-    let lastDateWeeks = -11111111111;
 
 
-    const currentDay = date.getDay();
 
-    for (let i = 0; i < 7; i++) {
-      const diff = i - currentDay;
-      const day = new Date(date);
-      day.setDate(date.getDate() + diff);
-      console.log({ endDate, startDate: date.getDate(), checkDate: day.getDate() })
-      if (day.getDate() <= endDate && date.getDate() <= day.getDate()) {
-        week.push({
-          dayName: weekDays[i],
-          date: day.getDate(),
-          Month: day.getMonth() + 1,
-        });
-        startDateWeeks = Math.min(startDateWeek, day.getDate());
-        lastDateWeeks = Math.max(lastDateWeek, day.getDate());
-      }
+    const currentDay = startDate.getDay();
+    let count = 0;
+    console.log("today's date", { startDate, endDate, iter1: (startDate.getDate() + count), iter2: endDate.getDate() })
+    for (let i = currentDay; i < 7; i++) {
+
+      if ((startDate.getDate() + count) > endDate.getDate())
+        continue;
+
+      week.push({
+        dayName: weekDays[i],
+        date: startDate.getDate() + count,
+        Month: startDate.getMonth() + 1,
+        year: startDate.getFullYear()
+      });
+
+      count++;
     }
 
 
@@ -48,9 +47,9 @@ const SliderComponent = () => {
   useEffect(() => {
     console.log("week days generator runs ", { startDateWeek, lastDateWeek })
     const today = new Date(currentYear, currentMonth - 1, startDateWeek);
-
-    const week = getWeekDaysFromDate(today, lastDateWeek);
-    console.log("week generator", { week })
+    const endToday = new Date(currentYear, currentMonth - 1, lastDateWeek);
+    const week = getWeekDaysFromDate(today, endToday);
+    console.log("week generator", { week, currentYear })
     setWeek(week)
   }, [startDateWeek, lastDateWeek, currentMonth, currentYear])
 
@@ -59,7 +58,7 @@ const SliderComponent = () => {
     <div className="slider-container" style={{ width: sliderWidth }}>
       <div className="week-grid">
         {weeks?.map((day, index) => {
-          if (day.date === new Date().getDate()) {
+          if (day.date === new Date().getDate() && day.Month === new Date().getMonth() && day.year === new Date().getFullYear()) {
             return (
               <div
                 key={index}

@@ -15,7 +15,7 @@ const SearchBar = () => {
       <div style={styles.inputContainer}>
         <input
           type="text"
-          placeholder="Search for a task"
+          placeholder="Search All week task"
           value={searchQuery}
           onChange={(e) => {
             dispatch(search({ task: e.target.value }));
