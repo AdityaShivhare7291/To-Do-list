@@ -10,7 +10,7 @@ const { DatabaseLoader } = require('./loaders/DatabaseLoader');
 
 const PORT = process.env.PORT || 8080;
 
-app.use(express.json());
+
 
 
 
@@ -18,6 +18,8 @@ app.use(cors({
   origin: 'https://to-do-list-alpha-eight-17.vercel.app',
   credentials: true
 }));
+
+app.use(express.json());
 
 app.use('/auth', authuser);
 app.use('/tasks', taskRoutes)
