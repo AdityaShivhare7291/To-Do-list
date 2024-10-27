@@ -29,13 +29,13 @@ const corsOptions = {
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
-//app.use(bodyParser.json());
+app.use(bodyParser.json());
 app.use(cors(corsOptions));
 
 app.use(cookieParser());
 
 
-app.options('*', cors());
+//app.options('*', cors());
 
 DatabaseLoader.init(app);
 
