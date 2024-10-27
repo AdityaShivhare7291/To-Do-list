@@ -12,15 +12,17 @@ const { RoutesLoader } = require('./loaders/RoutesLoader');
 
 const PORT = process.env.PORT || 8080;
 
-app.get('/', (req, res) => { res.send(<h1>hello</h1>) })
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(bodyParser.json());
+
+app.get('/', (req, res) => { return res.send(<h1>hello</h1>) })
 
 app.use(cors({
   origin: '*'
 }));
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(bodyParser.json());
+
 
 // Load database and routes
 DatabaseLoader.init(app);
