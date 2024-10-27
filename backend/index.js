@@ -12,7 +12,7 @@ const { RoutesLoader } = require('./loaders/RoutesLoader');
 
 const PORT = process.env.PORT || 8080;
 
-// Define CORS options
+// Define CORS 
 const corsOptions = {
   origin: 'https://to-do-list-seven-sand.vercel.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
