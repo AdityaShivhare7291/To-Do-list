@@ -4,7 +4,7 @@ const cors = require('cors');
 const http = require('http');
 const mongoose = require('mongoose');
 const app = express();
-const cookieParser = require('cookie-parser');
+
 
 const server = http.createServer(app);
 
@@ -34,7 +34,7 @@ app.use(cors({
   origin: 'https://to-do-list-seven-sand.vercel.app'
 }));
 
-app.use(cookieParser());
+
 
 
 //app.options('*', cors());
