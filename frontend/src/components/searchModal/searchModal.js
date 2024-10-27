@@ -17,20 +17,20 @@ const SearchTaskList = () => {
   const currentMonth = useSelector((state) => state.analyticTask.currentMonth);
   const currentYear = useSelector((state) => state.analyticTask.currentYear);
 
-
   const tasks = useSelector((state) => state.taskList.tasks);
   const searchTerm = useSelector((state) => state.searchTask.task);
 
   useEffect(() => {
-    console.log("searchTerm", { searchTerm, tasks })
-    filterWords()
-  }, [searchTerm])
+    console.log('searchTerm', { searchTerm, tasks });
+    filterWords();
+  }, [searchTerm]);
 
   function filterWords() {
-    const filteredTasks = tasks.filter(
-      (task) =>
-        task?.title?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false
-    ) ?? [];
+    const filteredTasks =
+      tasks.filter(
+        (task) =>
+          task?.title?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false
+      ) ?? [];
     Setfiltery(filteredTasks);
   }
 
@@ -63,12 +63,14 @@ const SearchTaskList = () => {
       <h3>All Search Results for Week</h3>
       {filtery.length > 0 ? (
         filtery?.map((item) => {
-          console.log("Search gone")
-          if (currentMonth === new Date(item.date).getMonth() + 1 &&
+          console.log('Search gone');
+          if (
+            currentMonth === new Date(item.date).getMonth() + 1 &&
             currentYear === new Date(item.date).getFullYear() &&
             startDateWeek <= new Date(item.date).getDate() &&
             lastDateWeek >= new Date(item.date).getDate() &&
-            item.title.toLowerCase().includes(searchTerm.toLowerCase())) {
+            item.title.toLowerCase().includes(searchTerm.toLowerCase())
+          ) {
             let line = 'none';
             let checked = false;
             let bg = 'transparent';

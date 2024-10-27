@@ -11,8 +11,6 @@ const LoginModal = ({ isOpen, onClose, onSubmit, onSignUp }) => {
 
   if (!isOpen) return null; // Don't render the modal if it's not open
 
-
-
   const submitFormData = async (e) => {
     try {
       // Send the data to the server

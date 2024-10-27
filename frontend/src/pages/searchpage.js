@@ -13,16 +13,16 @@ const SearchTaskList = ({ searchTerm }) => {
   const currentYear = useSelector((state) => state.analyticTask.currentYear);
 
   const filteredTasks = tasks.filter((task) => {
-    console.log({ tasks })
-    if (currentMonth === new Date(task.date).getMonth() + 1 &&
+    console.log({ tasks });
+    if (
+      currentMonth === new Date(task.date).getMonth() + 1 &&
       currentYear === new Date(task.date).getFullYear() &&
       startDateWeek <= new Date(task.date).getDate() &&
-      lastDateWeek >= new Date(task.date).getDate())
-      task.title.toLowerCase().includes(searchTerm.toLowerCase())
-    else
-      return false;
-  }
-  );
+      lastDateWeek >= new Date(task.date).getDate()
+    )
+      task.title.toLowerCase().includes(searchTerm.toLowerCase());
+    else return false;
+  });
 
   return (
     <div>

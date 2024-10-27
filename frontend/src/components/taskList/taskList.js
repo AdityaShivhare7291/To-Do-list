@@ -70,8 +70,8 @@ function TaskList() {
   }, []);
 
   useEffect(() => {
-    console.log("tasks at tasklist.js", tasks)
-  }, [tasks])
+    console.log('tasks at tasklist.js', tasks);
+  }, [tasks]);
 
   useEffect(() => {
     for (let i = 0; i < tasks?.length; i++) {
@@ -135,12 +135,14 @@ function TaskList() {
       <div>
         {filteredTasks
           .map((item, index) => {
-            console.log(item)
-            if (currentMonth === new Date(item.date).getMonth() + 1 &&
+            console.log(item);
+            if (
+              currentMonth === new Date(item.date).getMonth() + 1 &&
               currentYear === new Date(item.date).getFullYear() &&
               startDateWeek <= new Date(item.date).getDate() &&
-              lastDateWeek >= new Date(item.date).getDate()) {
-              console.log("flitery items", item);
+              lastDateWeek >= new Date(item.date).getDate()
+            ) {
+              console.log('flitery items', item);
               if (item.status === 'complete') {
                 return (
                   <TaskBar

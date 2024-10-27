@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { close } from '../redux/slice/editslice';
 import EditTask from '../components/edittask/edittask';
 
-function ViewAllTasks() {
+function ViewAllTasks({ taskId }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const tasks = useSelector((state) => state.taskList.tasks);
@@ -55,11 +55,16 @@ function ViewAllTasks() {
       </div>
       <div className="task-scroll-container">
         {tasks.map((item) => {
-          if (currentMonth === new Date(item.date).getMonth() + 1 &&
+          if (
+            currentMonth === new Date(item.date).getMonth() + 1 &&
             currentYear === new Date(item.date).getFullYear() &&
             startDateWeek <= new Date(item.date).getDate() &&
-            lastDateWeek >= new Date(item.date).getDate()) {
-            console.log('items are', { date: new Date(item.date).getDate(), currentMonth: new Date(item.date).getMonth() });
+            lastDateWeek >= new Date(item.date).getDate()
+          ) {
+            console.log('items are', {
+              date: new Date(item.date).getDate(),
+              currentMonth: new Date(item.date).getMonth(),
+            });
             if (true) {
               let line = 'none';
               let checked = false;

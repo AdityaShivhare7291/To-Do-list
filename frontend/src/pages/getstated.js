@@ -12,7 +12,7 @@ function GetStarted() {
   const navigate = useNavigate();
 
   async function wait(seconds) {
-    return new Promise(resolve => setTimeout(resolve, seconds * 1000));
+    return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
   }
 
   const handleLoginSubmit = async ({ email, password }) => {
@@ -24,14 +24,12 @@ function GetStarted() {
     );
     console.log({ response });
     if (response.data) {
-
       localStorage.setItem('authToken-todo', response.data.user);
-      console.log("code is waiting");
-      await wait(4)
+      console.log('code is waiting');
+      await wait(4);
 
-      console.log("code is passed", localStorage);
+      console.log('code is passed', localStorage);
       navigate('/dashboard');
-
     }
     // Navigate to home after login
   };
@@ -46,16 +44,13 @@ function GetStarted() {
     );
     console.log({ response });
     if (response.data) {
-
       localStorage.setItem('authToken-todo', response.data.userToken);
-      console.log("code is waiting");
-      await wait(1)
+      console.log('code is waiting');
+      await wait(1);
 
-      console.log("code is passed", localStorage.getItem('authToken-todo'));
+      console.log('code is passed', localStorage.getItem('authToken-todo'));
       navigate('/dashboard');
-
     }
-
   };
 
   const onSignUp = (e) => {

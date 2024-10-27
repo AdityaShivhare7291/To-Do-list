@@ -9,13 +9,13 @@ import AddTask from '../components/addtask/addtask';
 import EditTask from '../components/edittask/edittask';
 import { useSelector, useDispatch } from 'react-redux';
 import { close } from '../redux/slice/editslice';
-import DateCalc from '../utils/timepass.js'
+import DateCalc from '../utils/timepass.js';
 import SearchTaskList from '../components/searchModal/searchModal';
 import { updateAnalyticsCriteria } from '../redux/slice/analytics.js';
-
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function DashBoard() {
-
+  const navigate = useNavigate();
   const [isAddNewTaskOpen, SetisAddNewTaskOpen] = useState(false);
   const isEditTaskOpen = useSelector((state) => state.editTask.edittask);
   const currentMonths = useSelector((state) => state.analyticTask.currentMonth);
@@ -26,47 +26,55 @@ function DashBoard() {
   const [selectedMonth, setSelectedMonth] = useState('');
   const [selectedYear, setSelectedYear] = useState('');
   const [selectedWeek, setSelectedWeek] = useState('');
-  const [totalNoOfWeeks, setTotalNoOfWeeks] = useState('')
+  const [totalNoOfWeeks, setTotalNoOfWeeks] = useState('');
 
   useEffect(() => {
-    const noOfweeks = DateCalc.calculateWeeksInMonth(new Date().getFullYear(), new Date().getMonth());
-    setTotalNoOfWeeks(noOfweeks)
+    const noOfweeks = DateCalc.calculateWeeksInMonth(
+      new Date().getFullYear(),
+      new Date().getMonth()
+    );
+    setTotalNoOfWeeks(noOfweeks);
     setSelectedMonth(currentMonths ?? new Date().getMonth());
-    setSelectedYear(currentYears ?? new Date().getFullYear())
+    setSelectedYear(currentYears ?? new Date().getFullYear());
   }, []);
 
   useEffect(() => {
     if (selectedMonth !== '' && selectedYear !== '') {
-      console.log("CHange in week console runs")
-      const noOfweeks = DateCalc.calculateWeeksInMonth(selectedYear, selectedMonth);
-      setTotalNoOfWeeks(noOfweeks)
+      console.log('CHange in week console runs');
+      const noOfweeks = DateCalc.calculateWeeksInMonth(
+        selectedYear,
+        selectedMonth
+      );
+      setTotalNoOfWeeks(noOfweeks);
       setSelectedWeek(currentWeeks ?? 1);
       runner(1);
     }
-
-  }, [selectedMonth, selectedYear])
+  }, [selectedMonth, selectedYear]);
 
   const runner = (weekNo) => {
-    const starty = DateCalc.calculateDate(selectedYear, selectedMonth, weekNo)
-    console.log("starty", { starty, selectedYear: Number(selectedYear), selectedWeek, selectedMonth })
-    dispatch(updateAnalyticsCriteria({
-      weekFirstDate: starty.startDate,
-      weekLastDate: starty.enddate,
-      currentMonth: Number(selectedMonth),
-      currentYear: Number(selectedYear),
-      currentWeek: Number(weekNo)
-    }))
-  }
+    const starty = DateCalc.calculateDate(selectedYear, selectedMonth, weekNo);
+    console.log('starty', {
+      starty,
+      selectedYear: Number(selectedYear),
+      selectedWeek,
+      selectedMonth,
+    });
+    dispatch(
+      updateAnalyticsCriteria({
+        weekFirstDate: starty.startDate,
+        weekLastDate: starty.enddate,
+        currentMonth: Number(selectedMonth),
+        currentYear: Number(selectedYear),
+        currentWeek: Number(weekNo),
+      })
+    );
+  };
   useEffect(() => {
-
     if (selectedWeek !== '') {
-      console.log("Week is changed")
+      console.log('Week is changed');
       runner(selectedWeek);
     }
-
-  }, [selectedWeek])
-
-
+  }, [selectedWeek]);
 
   // Month options
   const months = Array.from({ length: 12 }, (v, i) => ({
@@ -87,15 +95,48 @@ function DashBoard() {
     label: `Week ${i + 1}`,
   }));
 
-  console.log({ isEditTaskOpen })
+  console.log({ isEditTaskOpen });
 
   const dispatch = useDispatch();
 
+  const handleLogout = () => {
+    localStorage.removeItem('authToken-todo');
+    navigate('/getstarted');
+  };
+
   return (
     <div style={{ padding: '10px' }}>
+      {/* Logout Button */}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          marginBottom: '20px',
+        }}
+      >
+        <button
+          onClick={handleLogout} // Replace with your logout function
+          style={{
+            padding: '10px 20px',
+            backgroundColor: '#FF5A5A',
+            color: 'white',
+            borderRadius: '5px',
+            border: 'none',
+            cursor: 'pointer',
+          }}
+        >
+          Logout
+        </button>
+      </div>
 
       {/* Month, Year, and Week Selectors */}
-      <div style={{ display: 'flex', justifyContent: "space-between", marginBottom: '20px' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          marginBottom: '20px',
+        }}
+      >
         <select
           value={selectedMonth}
           onChange={(e) => setSelectedMonth(e.target.value)}
@@ -148,7 +189,6 @@ function DashBoard() {
       <br />
       <TaskList />
       <br />
-
 
       <div
         style={{

@@ -22,7 +22,7 @@ const analyticTask = createSlice({
       // state.closed = action.payload.closed;
     },
     updateAnalyticsCriteria: (state, action) => {
-      console.log("hhhh", { currentYear: action.payload.currentYear })
+      console.log('hhhh', { currentYear: action.payload.currentYear });
       state.weekFirstDate = action.payload.weekFirstDate;
       state.weekLastDate = action.payload.weekLastDate;
       state.currentMonth = action.payload.currentMonth;

@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const SignUpModal = ({ isOpen, onClose, onSubmit }) => {
-
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,7 +17,6 @@ const SignUpModal = ({ isOpen, onClose, onSubmit }) => {
     setEmail('');
     setPassword('');
   };
-
 
   return (
     <div style={styles.overlay}>

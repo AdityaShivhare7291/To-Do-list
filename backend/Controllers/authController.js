@@ -47,7 +47,6 @@ class AuthController {
 
       const userToken = jwt.sign(payload, secretKey, { expiresIn: '7d' }); // Token expires in 4 hour
 
-
       return res.status(200).json({ userToken });
     } catch (e) {
       console.log(e);

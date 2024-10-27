@@ -3,19 +3,22 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import DashBoard from './pages/dashboard';
 import GetStarted from './pages/getstated';
 import ViewAllTasks from './pages/viewAllTasks';
+import ViewTaskDetails from './pages/viewTaskDetails';
 
 import './App.css';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('authToken-todo'));
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!localStorage.getItem('authToken-todo')
+  );
 
   function check() {
-    return !!localStorage.getItem('authToken-todo')
+    return !!localStorage.getItem('authToken-todo');
   }
 
   useEffect(() => {
     const handleStorageChange = () => {
-      console.log("it runs or not")
+      console.log('it runs or not');
       setIsLoggedIn(!!localStorage.getItem('authToken-todo'));
     };
 
@@ -35,8 +38,20 @@ const App = () => {
           element={check() ? <DashBoard /> : <Navigate to="/getstarted" />}
         />
         <Route path="/getstarted" element={<GetStarted />} />
-        <Route path="/dashboard" element={check() ? <DashBoard /> : <Navigate to="/getstarted" />} />
-        <Route path="/viewAllTasks" element={check() ? <ViewAllTasks /> : <Navigate to="/getstarted" />} />
+        <Route
+          path="/dashboard"
+          element={check() ? <DashBoard /> : <Navigate to="/getstarted" />}
+        />
+        <Route
+          path="/viewAllTasks"
+          element={check() ? <ViewAllTasks /> : <Navigate to="/getstarted" />}
+        />
+        <Route
+          path="/viewTask"
+          element={
+            check() ? <ViewTaskDetails /> : <Navigate to="/getstarted" />
+          }
+        />
       </Routes>
     </div>
   );

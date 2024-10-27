@@ -65,18 +65,16 @@ const Progress = () => {
   }, [tasks, startDateWeek, lastDateWeek, currentMonth, currentYear]);
 
   useEffect(() => {
-    console.log("Analyticcs is passed")
+    console.log('Analyticcs is passed');
     if (!(counts.completed + counts.progress + counts.open + counts.closed)) {
-      dispatch(updateAnalytics({ progress: 0 }))
-    }
-    else {
+      dispatch(updateAnalytics({ progress: 0 }));
+    } else {
       const ans =
         (counts.completed /
           (counts.completed + counts.progress + counts.open + counts.closed)) *
         100;
       dispatch(updateAnalytics({ progress: ans }));
     }
-
   }, [counts]);
 
   return (

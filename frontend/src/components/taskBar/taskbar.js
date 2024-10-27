@@ -5,8 +5,10 @@ import Edit from '../../static/edit.png';
 import './taskbar.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { open } from '../../redux/slice/editslice';
+import { useNavigate } from 'react-router-dom';
 
 const TaskBar = ({ task, deleteTask, styled }) => {
+  const navigate = useNavigate();
   console.log({ styled });
   const dispatch = useDispatch();
 
@@ -27,6 +29,9 @@ const TaskBar = ({ task, deleteTask, styled }) => {
             fontSize: '14px',
             fontWeight: '500',
             textDecoration: styled.line,
+          }}
+          onClick={() => {
+            navigate('/viewTask', { state: { task } });
           }}
         >
           {task?.title ?? 'hello'}
