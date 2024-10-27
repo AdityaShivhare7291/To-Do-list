@@ -30,9 +30,7 @@ const PORT = process.env.PORT || 8080;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(cors({
-  origin: ['https://to-do-list-seven-sand.vercel.app', 'https://to-do-list-git-main-adityashivhare7291s-projects.vercel.app/']
-}));
+app.use(cors());
 
 
 
