@@ -127,6 +127,7 @@ const styles = {
     borderRadius: '4px',
     cursor: 'pointer',
     width: '100%',
+    marginBottom: '5px'
   },
 };
 
