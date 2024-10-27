@@ -17,7 +17,8 @@ app.use(express.json());
 
 
 app.use(cors({
-  origin: 'https://to-do-list-seven-sand.vercel.app'
+  origin: 'https://to-do-list-seven-sand.vercel.app',
+  credentials: true
 }));
 
 app.use('/auth', authuser);
