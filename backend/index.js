@@ -12,7 +12,7 @@ const { RoutesLoader } = require('./loaders/RoutesLoader');
 
 const PORT = process.env.PORT || 8080;
 
-app.route('/hello', () => { res.send(<h1>hello</h1>) })
+app.get('/', (req, res) => { res.send(<h1>hello</h1>) })
 
 app.use(cors({
   origin: '*'
