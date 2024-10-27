@@ -18,7 +18,6 @@ const PORT = process.env.PORT || 8080;
 
 // Connect to MongoDB using the URI from .env
 
-app.options('*', cors());
 
 const corsOptions = {
   origin: 'https://to-do-list-seven-sand.vercel.app',
@@ -31,8 +30,12 @@ const corsOptions = {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 //app.use(bodyParser.json());
-//app.use(cors(corsOptions));
+app.use(cors(corsOptions));
+
 app.use(cookieParser());
+
+
+app.options('*', cors());
 
 DatabaseLoader.init(app);
 
