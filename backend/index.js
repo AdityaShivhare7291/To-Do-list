@@ -19,18 +19,20 @@ const PORT = process.env.PORT || 8080;
 // Connect to MongoDB using the URI from .env
 
 
-const corsOptions = {
-  origin: 'https://to-do-list-seven-sand.vercel.app',
-  // Allow this origin
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify the allowed HTTP methods
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
-};
+// const corsOptions = {
+//   origin: 'https://to-do-list-seven-sand.vercel.app',
+//   // Allow this origin
+//   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify the allowed HTTP methods
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+//   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+// };
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(cors(corsOptions));
+app.use(cors({
+  origin: 'https://to-do-list-seven-sand.vercel.app'
+}));
 
 app.use(cookieParser());
 
