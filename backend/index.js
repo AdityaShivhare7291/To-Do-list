@@ -19,10 +19,8 @@ const PORT = process.env.PORT || 8080;
 // Connect to MongoDB using the URI from .env
 
 const corsOptions = {
-  origin: [
-    'http://localhost:3000',
-    'https://to-do-list-seven-sand.vercel.app',
-  ], // Allow this origin
+  origin: 'https://to-do-list-seven-sand.vercel.app',
+  // Allow this origin
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify the allowed HTTP methods
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
