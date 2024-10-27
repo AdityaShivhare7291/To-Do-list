@@ -12,16 +12,20 @@ const { RoutesLoader } = require('./loaders/RoutesLoader');
 
 const PORT = process.env.PORT || 8080;
 
-// Define CORS 
-const corsOptions = {
+
+
+app.use(cors({
   origin: 'https://to-do-list-seven-sand.vercel.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
-};
-
-app.use(cors(corsOptions)); // Apply CORS with options
-app.options('*', cors(corsOptions)); // Handle preflight requests
+})); // Apply CORS with options
+app.options('*', cors({
+  origin: 'https://to-do-list-seven-sand.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+})); // Handle preflight requests
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
