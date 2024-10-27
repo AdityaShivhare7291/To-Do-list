@@ -27,7 +27,7 @@ function GetStarted() {
 
       localStorage.setItem('authToken-todo', response.data.user);
       console.log("code is waiting");
-      await wait(1)
+      await wait(4)
 
       console.log("code is passed", localStorage);
       navigate('/dashboard');
