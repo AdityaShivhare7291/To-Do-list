@@ -22,9 +22,9 @@ app.get('/', (req, res) => {
 DatabaseLoader.init(app);
 RoutesLoader.initRoutes(app);
 
-app.use(cors({
-  origin: 'https://to-do-list-seven-sand.vercel.app'
-}));
+// app.use(cors({
+//   origin: 'https://to-do-list-seven-sand.vercel.app'
+// }));
 
 // app.use((req, res, next) => {
 //   res.header('Access-Control-Allow-Origin', 'https://to-do-list-seven-sand.vercel.app');
