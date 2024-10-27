@@ -4,7 +4,7 @@ const http = require('http');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const app = express();
-const server = http.createServer(app);
+
 const cors = require('cors');
 
 const { DatabaseLoader } = require('./loaders/DatabaseLoader');
@@ -22,12 +22,10 @@ app.use(cors({
   origin: '*'
 }));
 
-
-
 // Load database and routes
 DatabaseLoader.init(app);
 RoutesLoader.initRoutes(app);
 
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
