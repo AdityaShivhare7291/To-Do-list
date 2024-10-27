@@ -5,21 +5,18 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const app = express();
 const server = http.createServer(app);
+const cors = require('cors');
 
 const { DatabaseLoader } = require('./loaders/DatabaseLoader');
 const { RoutesLoader } = require('./loaders/RoutesLoader');
 
 const PORT = process.env.PORT || 8080;
 
+app.route('/hello', () => { res.send(<h1>hello</h1>) })
 
-
-app.use(function (req, res, next) {
-  //Enabling CORS
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
-  next();
-});
+app.use(cors({
+  origin: '*'
+}));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
