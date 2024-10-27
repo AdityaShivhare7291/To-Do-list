@@ -14,15 +14,17 @@ const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
 
+
+
+app.use(cors({
+  origin: 'https://to-do-list-seven-sand.vercel.app'
+}));
+
 app.use('/auth', authuser);
 app.use('/tasks', taskRoutes)
 app.get('/', (req, res) => {
   return res.send("hello");
 });
-
-app.use(cors({
-  origin: 'https://to-do-list-seven-sand.vercel.app'
-}));
 
 DatabaseLoader.init(app);
 //RoutesLoader.initRoutes(app);
