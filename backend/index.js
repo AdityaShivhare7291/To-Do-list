@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-const http = require('http');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const app = express();
@@ -16,7 +15,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(bodyParser.json());
 
-app.route('/', (req, res) => { return res.send("hello") })
+app.get('/', (req, res) => {
+  return res.send("hello");
+});
 
 app.use(cors({
   origin: '*'
