@@ -31,7 +31,7 @@ const Progress = () => {
     tasks.forEach((element) => {
       console.log('month is ', {
         currentMonth,
-        hh: new Date(element.date).getMonth() + 1,
+        hh: new Date(element.date).getMonth(),
       });
       console.log('current year', {
         currentYear,

@@ -18,34 +18,32 @@ function DashBoard() {
 
   const [isAddNewTaskOpen, SetisAddNewTaskOpen] = useState(false);
   const isEditTaskOpen = useSelector((state) => state.editTask.edittask);
-
-  const startDateWeek = useSelector(
-    (state) => state.analyticTask.weekFirstDate
-  );
-  const lastDateWeek = useSelector((state) => state.analyticTask.weekLastDate);
-  const currentMonth = useSelector((state) => state.analyticTask.currentMonth);
+  const currentMonths = useSelector((state) => state.analyticTask.currentMonth);
   const currentYears = useSelector((state) => state.analyticTask.currentYear);
+  const currentWeeks = useSelector((state) => state.analyticTask.currentWeek);
 
   // State to store selected values
-  const [selectedMonth, setSelectedMonth] = useState(currentMonth ?? '');
-  const [selectedYear, setSelectedYear] = useState(currentYears ?? '');
+  const [selectedMonth, setSelectedMonth] = useState('');
+  const [selectedYear, setSelectedYear] = useState('');
   const [selectedWeek, setSelectedWeek] = useState('');
   const [totalNoOfWeeks, setTotalNoOfWeeks] = useState('')
 
   useEffect(() => {
-    const currentMonth = new Date().getMonth();
     const noOfweeks = DateCalc.calculateWeeksInMonth(new Date().getFullYear(), new Date().getMonth());
     setTotalNoOfWeeks(noOfweeks)
-    setSelectedMonth(currentMonth);
-    setSelectedYear(new Date().getFullYear())
+    setSelectedMonth(currentMonths ?? new Date().getMonth());
+    setSelectedYear(currentYears ?? new Date().getFullYear())
   }, []);
 
   useEffect(() => {
-    console.log("CHange in week console runs")
-    const noOfweeks = DateCalc.calculateWeeksInMonth(selectedYear, selectedMonth);
-    setTotalNoOfWeeks(noOfweeks)
-    setSelectedWeek(1);
-    runner(1);
+    if (selectedMonth !== '' && selectedYear !== '') {
+      console.log("CHange in week console runs")
+      const noOfweeks = DateCalc.calculateWeeksInMonth(selectedYear, selectedMonth);
+      setTotalNoOfWeeks(noOfweeks)
+      setSelectedWeek(currentWeeks ?? 1);
+      runner(1);
+    }
+
   }, [selectedMonth, selectedYear])
 
   const runner = (weekNo) => {
@@ -55,11 +53,17 @@ function DashBoard() {
       weekFirstDate: starty.startDate,
       weekLastDate: starty.enddate,
       currentMonth: Number(selectedMonth),
-      currentYear: Number(selectedYear)
+      currentYear: Number(selectedYear),
+      currentWeek: Number(weekNo)
     }))
   }
   useEffect(() => {
-    runner(selectedWeek);
+
+    if (selectedWeek !== '') {
+      console.log("Week is changed")
+      runner(selectedWeek);
+    }
+
   }, [selectedWeek])
 
 

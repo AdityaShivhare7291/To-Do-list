@@ -64,7 +64,7 @@ const SearchTaskList = () => {
       {filtery.length > 0 ? (
         filtery?.map((item) => {
           console.log("Search gone")
-          if (currentMonth === new Date(item.date).getMonth() &&
+          if (currentMonth === new Date(item.date).getMonth() + 1 &&
             currentYear === new Date(item.date).getFullYear() &&
             startDateWeek <= new Date(item.date).getDate() &&
             lastDateWeek >= new Date(item.date).getDate() &&

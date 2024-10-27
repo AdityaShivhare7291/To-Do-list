@@ -59,7 +59,7 @@ function ViewAllTasks() {
             currentYear === new Date(item.date).getFullYear() &&
             startDateWeek <= new Date(item.date).getDate() &&
             lastDateWeek >= new Date(item.date).getDate()) {
-            console.log('items are', tasks);
+            console.log('items are', { date: new Date(item.date).getDate(), currentMonth: new Date(item.date).getMonth() });
             if (true) {
               let line = 'none';
               let checked = false;

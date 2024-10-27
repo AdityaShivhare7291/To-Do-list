@@ -92,7 +92,7 @@ function TaskList() {
     const filtered = tasks.filter((item) => {
       const itemDate = new Date(item.date);
       return (
-        currentMonth === itemDate.getMonth() &&
+        currentMonth === itemDate.getMonth() + 1 &&
         currentYear === itemDate.getFullYear() &&
         startDateWeek <= itemDate.getDate() &&
         lastDateWeek >= itemDate.getDate()
@@ -136,10 +136,11 @@ function TaskList() {
         {filteredTasks
           .map((item, index) => {
             console.log(item)
-            if (currentMonth === new Date(item.date).getMonth() &&
+            if (currentMonth === new Date(item.date).getMonth() + 1 &&
               currentYear === new Date(item.date).getFullYear() &&
               startDateWeek <= new Date(item.date).getDate() &&
               lastDateWeek >= new Date(item.date).getDate()) {
+              console.log("flitery items", item);
               if (item.status === 'complete') {
                 return (
                   <TaskBar

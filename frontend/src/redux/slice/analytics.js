@@ -11,6 +11,7 @@ const analyticTask = createSlice({
     weekLastDate: null,
     currentMonth: null,
     currentYear: null,
+    currentWeek: null,
     progresspercent: 0,
   },
   reducers: {
@@ -26,6 +27,7 @@ const analyticTask = createSlice({
       state.weekLastDate = action.payload.weekLastDate;
       state.currentMonth = action.payload.currentMonth;
       state.currentYear = action.payload.currentYear;
+      state.currentWeek = action.payload.currentWeek;
     },
   },
 });
