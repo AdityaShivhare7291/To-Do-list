@@ -62,7 +62,7 @@ const Progress = () => {
     });
 
     setCounts({ completed, progress, open, closed });
-  }, [tasks]);
+  }, [tasks, startDateWeek, lastDateWeek, currentMonth, currentYear]);
 
   useEffect(() => {
     const ans =
