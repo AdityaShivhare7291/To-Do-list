@@ -11,6 +11,13 @@ function TaskList() {
   const navigate = useNavigate();
   const tasks = useSelector((state) => state.taskList.tasks);
 
+  const startDateWeek = useSelector(
+    (state) => state.analyticTask.weekFirstDate
+  );
+  const lastDateWeek = useSelector((state) => state.analyticTask.weekLastDate);
+  const currentMonth = useSelector((state) => state.analyticTask.currentMonth);
+  const currentYear = useSelector((state) => state.analyticTask.currentYear);
+
   const fetchData = async () => {
     try {
       const token = localStorage.getItem('authToken-todo');
@@ -110,7 +117,10 @@ function TaskList() {
       <div>
         {tasks
           .map((item, index) => {
-            if (new Date(item.date).getDate() === new Date().getDate()) {
+            if (currentMonth === new Date(item.date).getMonth() + 1 &&
+              currentYear === new Date(item.date).getFullYear() &&
+              startDateWeek <= new Date(item.date).getDate() &&
+              lastDateWeek >= new Date(item.date).getDate()) {
               if (item.status === 'complete') {
                 return (
                   <TaskBar
