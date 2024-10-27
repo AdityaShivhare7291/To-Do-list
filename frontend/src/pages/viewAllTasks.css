@@ -13,6 +13,7 @@
 }
 
 .task-scroll-container {
+  position: relative;
   margin-top: 60px; /* Space for the fixed header; adjust based on your header height */
   height: calc(100vh - 60px); /* Full height minus header height */
   overflow-y: auto; /* Enable vertical scrolling */

@@ -1,20 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './slider.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateAnalyticsCriteria } from '../../redux/slice/analytics';
 
 const SliderComponent = () => {
   const [sliderWidth, setSliderWidth] = useState('100%');
-  const [showArrows, setShowArrows] = useState(true);
+  const [weeks, setWeek] = useState(null);
   const dispatch = useDispatch();
 
-  function getWeekDaysFromDate(date) {
+  const startDateWeek = useSelector((state) => state.analyticTask.weekFirstDate);
+  const lastDateWeek = useSelector((state) => state.analyticTask.weekLastDate);
+  const currentMonth = useSelector((state) => state.analyticTask.currentMonth);
+  const currentYear = useSelector((state) => state.analyticTask.currentYear)
+
+  function getWeekDaysFromDate(date, endDate) {
+    console.log("today's date", date)
     const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const week = [];
 
-    let startDateWeek = 11111111111;
-    let lastDateWeek = -11111111111;
-    let month = 0;
+    let startDateWeeks = 11111111111;
+    let lastDateWeeks = -11111111111;
+
 
     const currentDay = date.getDay();
 
@@ -22,37 +28,37 @@ const SliderComponent = () => {
       const diff = i - currentDay;
       const day = new Date(date);
       day.setDate(date.getDate() + diff);
-
-      if (day.getMonth() + 1 === new Date().getMonth() + 1) {
+      console.log({ endDate, startDate: date.getDate(), checkDate: day.getDate() })
+      if (day.getDate() <= endDate && date.getDate() <= day.getDate()) {
         week.push({
           dayName: weekDays[i],
           date: day.getDate(),
           Month: day.getMonth() + 1,
         });
-        startDateWeek = Math.min(startDateWeek, day.getDate());
-        lastDateWeek = Math.max(lastDateWeek, day.getDate());
+        startDateWeeks = Math.min(startDateWeek, day.getDate());
+        lastDateWeeks = Math.max(lastDateWeek, day.getDate());
       }
     }
 
-    dispatch(
-      updateAnalyticsCriteria({
-        weekFirstDate: startDateWeek,
-        weekLastDate: lastDateWeek,
-        currentMonth: new Date().getMonth() + 1,
-        currentYear: new Date().getFullYear(),
-      })
-    );
+
 
     return week;
   }
 
-  const today = new Date();
-  const week = getWeekDaysFromDate(today);
+  useEffect(() => {
+    console.log("week days generator runs ", { startDateWeek, lastDateWeek })
+    const today = new Date(currentYear, currentMonth - 1, startDateWeek);
+
+    const week = getWeekDaysFromDate(today, lastDateWeek);
+    console.log("week generator", { week })
+    setWeek(week)
+  }, [startDateWeek, lastDateWeek, currentMonth, currentYear])
+
 
   return (
     <div className="slider-container" style={{ width: sliderWidth }}>
       <div className="week-grid">
-        {week.map((day, index) => {
+        {weeks?.map((day, index) => {
           if (day.date === new Date().getDate()) {
             return (
               <div

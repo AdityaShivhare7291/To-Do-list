@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchBar from '../components/searchbar';
 import Slider from '../components/slider/slider';
 import Progress from '../components/boxes/boxes';
@@ -9,14 +9,72 @@ import AddTask from '../components/addtask/addtask';
 import EditTask from '../components/edittask/edittask';
 import { useSelector, useDispatch } from 'react-redux';
 import { close } from '../redux/slice/editslice';
-
+import DateCalc from '../utils/timepass.js'
 import SearchTaskList from '../components/searchModal/searchModal';
+import { updateAnalyticsCriteria } from '../redux/slice/analytics.js';
+
 
 function DashBoard() {
+
   const [isAddNewTaskOpen, SetisAddNewTaskOpen] = useState(false);
   const isEditTaskOpen = useSelector((state) => state.editTask.edittask);
 
+  // State to store selected values
+  const [selectedMonth, setSelectedMonth] = useState('');
+  const [selectedYear, setSelectedYear] = useState('');
+  const [selectedWeek, setSelectedWeek] = useState('');
+  const [totalNoOfWeeks, setTotalNoOfWeeks] = useState('')
 
+  useEffect(() => {
+    const currentMonth = new Date().getMonth();
+    const noOfweeks = DateCalc.calculateWeeksInMonth(new Date().getFullYear(), new Date().getMonth());
+    setTotalNoOfWeeks(noOfweeks)
+    setSelectedMonth(currentMonth);
+    setSelectedYear(new Date().getFullYear())
+  }, []);
+
+  useEffect(() => {
+    console.log("CHange in week console runs")
+    const noOfweeks = DateCalc.calculateWeeksInMonth(selectedYear, selectedMonth);
+    setTotalNoOfWeeks(noOfweeks)
+    setSelectedWeek(1);
+    runner(1);
+  }, [selectedMonth, selectedYear])
+
+  const runner = (weekNo) => {
+    const starty = DateCalc.calculateDate(selectedYear, selectedMonth, weekNo)
+    console.log("starty", { starty, selectedYear, selectedWeek, selectedMonth })
+    dispatch(updateAnalyticsCriteria({
+      weekFirstDate: starty.startDate,
+      weekLastDate: starty.enddate,
+      currentMonth: Number(selectedMonth),
+      currentYear: Number(currentYear)
+    }))
+  }
+  useEffect(() => {
+    runner(selectedWeek);
+  }, [selectedWeek])
+
+
+
+  // Month options
+  const months = Array.from({ length: 12 }, (v, i) => ({
+    value: i + 1,
+    label: new Date(0, i).toLocaleString('default', { month: 'long' }),
+  }));
+
+  // Year options (you can adjust the range as needed)
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: 5 }, (v, i) => ({
+    value: currentYear + i,
+    label: currentYear + i,
+  }));
+
+  // Week options (1-4, depending on how you define weeks)
+  const weeks = Array.from({ length: totalNoOfWeeks }, (v, i) => ({
+    value: i + 1,
+    label: `Week ${i + 1}`,
+  }));
 
   console.log({ isEditTaskOpen })
 
@@ -24,6 +82,49 @@ function DashBoard() {
 
   return (
     <div style={{ padding: '10px' }}>
+
+      {/* Month, Year, and Week Selectors */}
+      <div style={{ display: 'flex', justifyContent: "space-between", marginBottom: '20px' }}>
+        <select
+          value={selectedMonth}
+          onChange={(e) => setSelectedMonth(e.target.value)}
+          style={{ padding: '5px', borderRadius: '5px' }}
+        >
+          <option value="">Select Month</option>
+          {months.map((month) => (
+            <option key={month.value} value={month.value}>
+              {month.label}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={selectedYear}
+          onChange={(e) => setSelectedYear(e.target.value)}
+          style={{ padding: '5px', borderRadius: '5px' }}
+        >
+          <option value="">Select Year</option>
+          {years.map((year) => (
+            <option key={year.value} value={year.value}>
+              {year.label}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={selectedWeek}
+          onChange={(e) => setSelectedWeek(e.target.value)}
+          style={{ padding: '5px', borderRadius: '5px' }}
+        >
+          <option value="">Select Week</option>
+          {weeks.map((week) => (
+            <option key={week.value} value={week.value}>
+              {week.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <SearchBar />
       {/* <TaskSearchList /> */}
       <SearchTaskList />
@@ -36,6 +137,8 @@ function DashBoard() {
       <br />
       <TaskList />
       <br />
+
+
       <div
         style={{
           display: 'flex',
