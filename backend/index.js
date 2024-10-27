@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 });
 
 app.use(cors({
-  origin: '*'
+  origin: 'https://to-do-list-seven-sand.vercel.app'
 }));
 
 // Load database and routes
