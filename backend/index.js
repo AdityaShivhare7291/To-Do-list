@@ -4,9 +4,7 @@ const mongoose = require('mongoose');
 const app = express();
 const authuser = require('./Routers/authRoutes');
 const taskRoutes = require('./Routers/taskRoutes');
-
 const cors = require('cors');
-
 const { DatabaseLoader } = require('./loaders/DatabaseLoader');
 //const { RoutesLoader } = require('./loaders/RoutesLoader');
 
@@ -17,7 +15,7 @@ app.use(express.json());
 
 
 app.use(cors({
-  origin: 'https://to-do-list-seven-sand.vercel.app',
+  origin: 'https://to-do-list-alpha-eight-17.vercel.app',
   credentials: true
 }));
 
