@@ -19,9 +19,16 @@ function DashBoard() {
   const [isAddNewTaskOpen, SetisAddNewTaskOpen] = useState(false);
   const isEditTaskOpen = useSelector((state) => state.editTask.edittask);
 
+  const startDateWeek = useSelector(
+    (state) => state.analyticTask.weekFirstDate
+  );
+  const lastDateWeek = useSelector((state) => state.analyticTask.weekLastDate);
+  const currentMonth = useSelector((state) => state.analyticTask.currentMonth);
+  const currentYears = useSelector((state) => state.analyticTask.currentYear);
+
   // State to store selected values
-  const [selectedMonth, setSelectedMonth] = useState('');
-  const [selectedYear, setSelectedYear] = useState('');
+  const [selectedMonth, setSelectedMonth] = useState(currentMonth ?? '');
+  const [selectedYear, setSelectedYear] = useState(currentYears ?? '');
   const [selectedWeek, setSelectedWeek] = useState('');
   const [totalNoOfWeeks, setTotalNoOfWeeks] = useState('')
 

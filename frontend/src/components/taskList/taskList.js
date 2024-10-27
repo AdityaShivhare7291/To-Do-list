@@ -10,6 +10,7 @@ function TaskList() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const tasks = useSelector((state) => state.taskList.tasks);
+  const [filteredTasks, setFilteredTasks] = useState([]);
 
   const startDateWeek = useSelector(
     (state) => state.analyticTask.weekFirstDate
@@ -69,6 +70,10 @@ function TaskList() {
   }, []);
 
   useEffect(() => {
+    console.log("tasks at tasklist.js", tasks)
+  }, [tasks])
+
+  useEffect(() => {
     for (let i = 0; i < tasks?.length; i++) {
       if (
         tasks.status === 'open' &&
@@ -82,6 +87,19 @@ function TaskList() {
     }
     dispatch(setTasks(tasks));
   }, [tasks]);
+
+  useEffect(() => {
+    const filtered = tasks.filter((item) => {
+      const itemDate = new Date(item.date);
+      return (
+        currentMonth === itemDate.getMonth() &&
+        currentYear === itemDate.getFullYear() &&
+        startDateWeek <= itemDate.getDate() &&
+        lastDateWeek >= itemDate.getDate()
+      );
+    });
+    setFilteredTasks(filtered);
+  }, [tasks, currentMonth, currentYear, startDateWeek, lastDateWeek]);
 
   const deleteTasky = async (id) => {
     try {
@@ -115,9 +133,10 @@ function TaskList() {
         </p>
       </div>
       <div>
-        {tasks
+        {filteredTasks
           .map((item, index) => {
-            if (currentMonth === new Date(item.date).getMonth() + 1 &&
+            console.log(item)
+            if (currentMonth === new Date(item.date).getMonth() &&
               currentYear === new Date(item.date).getFullYear() &&
               startDateWeek <= new Date(item.date).getDate() &&
               lastDateWeek >= new Date(item.date).getDate()) {

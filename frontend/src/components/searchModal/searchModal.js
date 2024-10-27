@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { search } from '../../redux/slice/searchSlice';
 import { deleteTask } from '../../redux/slice/taskslice';
@@ -8,14 +8,31 @@ import axios from 'axios';
 
 const SearchTaskList = () => {
   const dispatch = useDispatch();
+  const [filtery, Setfiltery] = useState('');
+
+  const startDateWeek = useSelector(
+    (state) => state.analyticTask.weekFirstDate
+  );
+  const lastDateWeek = useSelector((state) => state.analyticTask.weekLastDate);
+  const currentMonth = useSelector((state) => state.analyticTask.currentMonth);
+  const currentYear = useSelector((state) => state.analyticTask.currentYear);
+
 
   const tasks = useSelector((state) => state.taskList.tasks);
   const searchTerm = useSelector((state) => state.searchTask.task);
 
-  const filteredTasks = tasks.filter(
-    (task) =>
-      task?.title?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false
-  );
+  useEffect(() => {
+    console.log("searchTerm", { searchTerm, tasks })
+    filterWords()
+  }, [searchTerm])
+
+  function filterWords() {
+    const filteredTasks = tasks.filter(
+      (task) =>
+        task?.title?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false
+    ) ?? [];
+    Setfiltery(filteredTasks);
+  }
 
   const deleteTasky = async (id) => {
     try {
@@ -44,9 +61,14 @@ const SearchTaskList = () => {
   return (
     <div className="modal-content-below" onClick={(e) => e.stopPropagation()}>
       <h3>All Search Results for Week</h3>
-      {filteredTasks.length > 0 ? (
-        filteredTasks.map((item) => {
-          if (new Date(item.date).getDate() === new Date().getDate()) {
+      {filtery.length > 0 ? (
+        filtery?.map((item) => {
+          console.log("Search gone")
+          if (currentMonth === new Date(item.date).getMonth() &&
+            currentYear === new Date(item.date).getFullYear() &&
+            startDateWeek <= new Date(item.date).getDate() &&
+            lastDateWeek >= new Date(item.date).getDate() &&
+            item.title.toLowerCase().includes(searchTerm.toLowerCase())) {
             let line = 'none';
             let checked = false;
             let bg = 'transparent';

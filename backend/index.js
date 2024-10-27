@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 8080;
 
 
 app.use(cors({
-  origin: 'https://to-do-list-alpha-eight-17.vercel.app',
+  origin: ['https://to-do-list-alpha-eight-17.vercel.app', 'http://localhost:3000'],
   credentials: true
 }));
 

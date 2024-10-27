@@ -8,6 +8,7 @@ const Progress = () => {
 
   useEffect(() => {
     const setProgress = (percentage) => {
+      console.log("progress runs", { percentage });
       const progressBar = document.querySelector('.progress-1-bar');
       if (progressBar) progressBar.style.width = `${percentage}%`;
     };
